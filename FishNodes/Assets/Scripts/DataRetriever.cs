@@ -28,7 +28,6 @@ public class DataRetriever : MonoBehaviour {
 	void Start () {
 		fishSpawner = GetComponent<FishSpawner>();
 		//InvokeRepeating ("GetXML",0,300);
-		//StartCoroutine (GetXML());
 		GetXML ();
 	}
 
@@ -52,9 +51,6 @@ public class DataRetriever : MonoBehaviour {
 		sandhillsXML = tcpConnect (sandhillsURL, sandhillsPort);
 		redClusterXML = tcpConnect (redClusterURL, redClusterPort);
 
-		ParseXML (sandhillsXML);		
-		ParseXML (redClusterXML);
-
 		
 		/*
 		Debug.Log("Writing Data to Files...");
@@ -62,6 +58,13 @@ public class DataRetriever : MonoBehaviour {
 		File.WriteAllText ("Data/redClusterXML.txt",redClusterXML);
 		Debug.Log("Finished Writing Data!");
 		*/
+		
+		//sandhillsXML = File.ReadAllText ("Data/sandhllsXML.txt");
+		//redClusterXML = File.ReadAllText ("Data/redClusterXML.txt");
+
+		ParseXML (sandhillsXML);		
+		ParseXML (redClusterXML);
+
 
 	}
 
@@ -105,7 +108,12 @@ public class DataRetriever : MonoBehaviour {
 
 	void ParseCluster(XmlNode cluster){
 		string clusterName = cluster.Attributes ["NAME"].Value;
-		fishSpawner.SpawnFish (clusterName, true);
+		GameObject fish = GameObject.Find (clusterName);
+		if (fish == null) {
+			fish = fishSpawner.SpawnFish (clusterName, true);
+			//create new fish
+		}
+		FishData fishData = fish.GetComponent<FishData>();
 
 		/*cluster.Attributes["OWNER"].Value;
 		cluster.Attributes["LATLONG"].Value;
@@ -113,14 +121,18 @@ public class DataRetriever : MonoBehaviour {
 		cluster.Attributes["LOCALTIME"].Value;*/
 
 		foreach(XmlNode host in cluster.ChildNodes){
-			ParseHost(host, clusterName);
+			ParseHost(host, fishData.school);
 		}
 	}
 
 	void ParseHost(XmlNode host, string clusterName){
-		GameObject fish = fishSpawner.SpawnFish (clusterName, false);
-		fish.name = host.Attributes ["NAME"].Value;
-
+		string hostName = host.Attributes ["NAME"].Value;
+		GameObject fish = GameObject.Find (hostName);
+		if(fish == null){
+			fish = fishSpawner.SpawnFish (clusterName, false);
+			fish.name = hostName;
+		}
+		FishData fishData = fish.GetComponent<FishData>();
 		/*
 		host.Attributes["IP"].Value;
 		host.Attributes["LOCATION"].Value;
@@ -133,24 +145,41 @@ public class DataRetriever : MonoBehaviour {
 		 */
 
 		foreach(XmlNode metric in host.ChildNodes){
-			ParseMetric(metric);
+			ParseMetric(metric,fishData);
 		}
 	}
 
-	void ParseMetric(XmlNode metric){
-		/*metric.Attributes["NAME"].Value;
-		metric.Attributes["VAL"].Value;
-		metric.Attributes["TYPE"].Value;
-		metric.Attributes["UNITS"].Value;
-		metric.Attributes["TN"].Value;
-		metric.Attributes["TMAX"].Value;
-		metric.Attributes["DMAX"].Value;
-		metric.Attributes["SLOPE"].Value;
-		metric.Attributes["SOURCE"].Value;*/
+	void ParseMetric(XmlNode metric,FishData fishData){
+		string metricName = metric.Attributes["NAME"].Value;
+		if(metricName.Equals("procstat_gmond_mem")){
+			fishData.memoryUtilization = int.Parse( metric.Attributes["VAL"].Value);
 
+		}else if(metricName.Equals("load_one")){
+			fishData.avgLoad = float.Parse( metric.Attributes["VAL"].Value);
+			if(fishData.avgLoad != 0 && fishData.cpuCount != 0){
+				fishData.Resize ();
+			}
+		}else if(metricName.Equals("cpu_num")){
+			fishData.cpuCount = int.Parse( metric.Attributes["VAL"].Value);
+			if(fishData.avgLoad != 0 && fishData.cpuCount != 0){
+				fishData.Resize ();
+			}
+		}
+
+		/*metric.Attributes["NAME"].Value;
+			metric.Attributes["VAL"].Value;
+			metric.Attributes["TYPE"].Value;
+			metric.Attributes["UNITS"].Value;
+			metric.Attributes["TN"].Value;
+			metric.Attributes["TMAX"].Value;
+			metric.Attributes["DMAX"].Value;
+			metric.Attributes["SLOPE"].Value;
+			metric.Attributes["SOURCE"].Value;*/
+
+		/*
 		foreach(XmlNode extraData in metric.ChildNodes){
 			ParseExtraData(extraData);
-		}
+		}*/
 	}
 
 	void ParseExtraData(XmlNode extraData){

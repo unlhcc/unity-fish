@@ -10,15 +10,27 @@ public class FishData : MonoBehaviour {
 	Rigidbody rb;
 	Animator anim;
 	public bool isDead = false;
-	Color fishColor;
+	public Color fishColor;
 	public bool isSchoolLeader = false;
 	public string school = null;
+	public int memoryUtilization;
+	public int cpuCount;
+	public float avgLoad;
+	public int fishSize = 1;
+	bool flash = false;
 
 	void Awake(){
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody> ();
 		mat = GetComponentInChildren<Renderer> ().material;
 		SetColor (Color.cyan);
+	}
+
+	void Update (){
+		if(flash && !isDead){
+			float t = Mathf.PingPong(Time.time,1f);
+			mat.color = Color.Lerp(fishColor,Color.yellow,t);
+		}
 	}
 	
 	public void KillFish(){
@@ -36,7 +48,21 @@ public class FishData : MonoBehaviour {
 	}
 
 	public void SetColor(Color color){
-		fishColor = color;
 		mat.color = color;
+	}
+
+	public void Resize(){
+		float scalePercentage = avgLoad / cpuCount;
+		if (scalePercentage < 0.01f) {
+			scalePercentage = 0.01f;
+			flash = false;
+		} else if (scalePercentage > 1) {
+			scalePercentage = 1f;
+			flash = true;
+		} else {
+			flash = false;
+		}
+		scalePercentage = scalePercentage * 20;
+		transform.localScale = new Vector3(scalePercentage,scalePercentage,scalePercentage);
 	}
 }
