@@ -27,8 +27,8 @@ public class DataRetriever : MonoBehaviour {
 
 	void Start () {
 		fishSpawner = GetComponent<FishSpawner>();
-		//InvokeRepeating ("GetXML",0,300);
-		GetXML ();
+		InvokeRepeating ("GetXML",1,600);
+		//GetXML ();
 	}
 
 	string tcpConnect(string ip, int port){
@@ -47,6 +47,10 @@ public class DataRetriever : MonoBehaviour {
 	}
 	
 	void GetXML(){
+		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
+		foreach(GameObject fish in listOfFish){
+			fish.GetComponent<FishData>().KillFish();
+		}
 
 		sandhillsXML = tcpConnect (sandhillsURL, sandhillsPort);
 		redClusterXML = tcpConnect (redClusterURL, redClusterPort);
@@ -112,7 +116,10 @@ public class DataRetriever : MonoBehaviour {
 		if (fish == null) {
 			fish = fishSpawner.SpawnFish (clusterName, true);
 			//create new fish
+		} else {
+			fish.GetComponent<FishData>().ReviveFish();
 		}
+
 		FishData fishData = fish.GetComponent<FishData>();
 
 		/*cluster.Attributes["OWNER"].Value;
@@ -131,6 +138,8 @@ public class DataRetriever : MonoBehaviour {
 		if(fish == null){
 			fish = fishSpawner.SpawnFish (clusterName, false);
 			fish.name = hostName;
+		} else {
+			fish.GetComponent<FishData>().ReviveFish();
 		}
 		FishData fishData = fish.GetComponent<FishData>();
 		/*

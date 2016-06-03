@@ -917,8 +917,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  fishColor: {r: 0, g: 0, b: 0, a: 0}
   isSchoolLeader: 0
   school: 
+  memoryUtilization: 0
+  cpuCount: 0
+  avgLoad: 0
+  fishSize: 1
 --- !u!114 &11491872
 MonoBehaviour:
   m_ObjectHideFlags: 1

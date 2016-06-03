@@ -186,6 +186,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2364784, guid: 1d8f21e3fb9481b4f8b3ffdb6d81acde, type: 2}
+      propertyPath: m_UseLightProbes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364784, guid: 1d8f21e3fb9481b4f8b3ffdb6d81acde, type: 2}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2318076, guid: 1d8f21e3fb9481b4f8b3ffdb6d81acde, type: 2}
+      propertyPath: m_UseLightProbes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2318076, guid: 1d8f21e3fb9481b4f8b3ffdb6d81acde, type: 2}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d8f21e3fb9481b4f8b3ffdb6d81acde, type: 2}
   m_IsPrefabParent: 0

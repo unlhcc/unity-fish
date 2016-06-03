@@ -18,6 +18,7 @@ public class FishData : MonoBehaviour {
 	public float avgLoad;
 	public int fishSize = 1;
 	bool flash = false;
+	Vector3 origin = new Vector3(0,25,0);
 
 	void Awake(){
 		anim = GetComponent<Animator> ();
@@ -29,7 +30,11 @@ public class FishData : MonoBehaviour {
 	void Update (){
 		if(flash && !isDead){
 			float t = Mathf.PingPong(Time.time,1f);
-			mat.color = Color.Lerp(fishColor,Color.yellow,t);
+			mat.color = Color.Lerp(fishColor,new Color(fishColor.r,fishColor.g,1),t);
+		}
+		float distance = Vector3.Distance (transform.position, origin);
+		if (distance > 80) {
+			transform.position = origin;
 		}
 	}
 	
@@ -53,11 +58,11 @@ public class FishData : MonoBehaviour {
 
 	public void Resize(){
 		float scalePercentage = avgLoad / cpuCount;
-		if (scalePercentage < 0.01f) {
-			scalePercentage = 0.01f;
+		if (scalePercentage < 0.25f) {
+			scalePercentage = 0.25f;
 			flash = false;
-		} else if (scalePercentage > 1) {
-			scalePercentage = 1f;
+		} else if (scalePercentage > 1.2) {
+			scalePercentage = 1.25f;
 			flash = true;
 		} else {
 			flash = false;
