@@ -12,7 +12,8 @@ public class FishSpawner : MonoBehaviour {
 	void Update(){
 		//press keycodes to spawn fish
 		if(Input.GetKeyDown(KeyCode.F)){//sand leader
-			SpawnFish("sandhills", true);
+			GameObject fish = SpawnFish("sandhills", true);
+			fish.GetComponent<FishData>().memoryUtilization = 12345678;
 		}if(Input.GetKeyDown(KeyCode.R)){//red leader
 			SpawnFish("red-workers", true);
 		}

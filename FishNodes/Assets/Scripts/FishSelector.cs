@@ -20,11 +20,11 @@ public class FishSelector : MonoBehaviour {
 	int lineSize = 20;
 	
 	void Update () {
-		if(Input.GetMouseButtonDown(1)){
+		if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
 			screenSizeX = Camera.main.pixelWidth;
-			windowSizeX = screenSizeX * 0.2f;
+			windowSizeX = 260f;
 			screenSizeY = Camera.main.pixelHeight;
-			windowSizeY = lineSize * 10;
+			windowSizeY = lineSize * 6;
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			//Debug.DrawRay (ray.origin, ray.direction*300, Color.yellow);
 				
@@ -62,9 +62,10 @@ public class FishSelector : MonoBehaviour {
 		//data to display
 		GUI.Label (new Rect(5,0,windowSizeX-10,lineSize), selectedFish.name);
 		GUI.Label (new Rect(5,lineSize*1,windowSizeX-10,lineSize), "Dead? " + data.isDead.ToString());
-		GUI.Label (new Rect(5,lineSize*2,windowSizeX-10,lineSize), "xRot: " + selectedFish.transform.rotation.eulerAngles.x.ToString());
-		GUI.Label (new Rect(5,lineSize*3,windowSizeX-10,lineSize), "yRot: " + selectedFish.transform.rotation.eulerAngles.y.ToString());
-		GUI.Label (new Rect(5,lineSize*4,windowSizeX-10,lineSize), "zRot: " + selectedFish.transform.rotation.eulerAngles.z.ToString());
+		GUI.Label (new Rect(5,lineSize*2,windowSizeX-10,lineSize), "Total memory utilization: " + data.GetMemoryUtilizationFormated());
+		GUI.Label (new Rect(5,lineSize*3,windowSizeX-10,lineSize), "Total number of CPUs: " + data.cpuCount.ToString());
+		GUI.Label (new Rect(5,lineSize*4,windowSizeX-10,lineSize), "Minute load average: " + data.avgLoad.ToString());
+		/*
 		if (GUI.Button (new Rect(windowSizeX-lineSize,0,lineSize,lineSize), "X")) {
 			showGUI = false;
 		}
@@ -73,6 +74,8 @@ public class FishSelector : MonoBehaviour {
 		}if(GUI.Button(new Rect(windowSizeX*.1f,lineSize*6,windowSizeX*.8f,lineSize),"Save fish")){
 			data.ReviveFish();
 		}
+		*/
+
 	}
 
 }

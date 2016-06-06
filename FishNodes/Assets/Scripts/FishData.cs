@@ -56,6 +56,12 @@ public class FishData : MonoBehaviour {
 		mat.color = color;
 	}
 
+	public string GetMemoryUtilizationFormated(){
+		double temp = (memoryUtilization * 0.000001);
+		string memUtilString = temp.ToString() + " MB";
+		return memUtilString;
+	}
+
 	public void Resize(){
 		float scalePercentage = avgLoad / cpuCount;
 		if (scalePercentage < 0.25f) {
