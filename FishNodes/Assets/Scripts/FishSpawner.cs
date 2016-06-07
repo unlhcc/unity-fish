@@ -70,9 +70,17 @@ public class FishSpawner : MonoBehaviour {
 			fm.leaderFish = GameObject.Find(leader);
 		}
 		if (leader.Equals ("sandhills")) {
-			fd.fishColor = Color.green;
+			if(isLeader){
+				fd.fishColor = new Color(0f,0.3f,0f);
+			}else{
+				fd.fishColor = Color.green;
+			}
 		} else if (leader.Equals ("red-workers")) {
-			fd.fishColor = Color.red;
+			if(isLeader){
+				fd.fishColor = new Color(0.3f,0f,0f);
+			}else{
+				fd.fishColor = Color.red;
+			}
 		} else {
 			fd.fishColor = Color.cyan;
 		}

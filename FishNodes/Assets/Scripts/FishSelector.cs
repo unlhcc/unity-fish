@@ -24,7 +24,7 @@ public class FishSelector : MonoBehaviour {
 			screenSizeX = Camera.main.pixelWidth;
 			windowSizeX = 260f;
 			screenSizeY = Camera.main.pixelHeight;
-			windowSizeY = lineSize * 6;
+			windowSizeY = lineSize * 5;
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			//Debug.DrawRay (ray.origin, ray.direction*300, Color.yellow);
 				
@@ -61,10 +61,16 @@ public class FishSelector : MonoBehaviour {
 	void GUIdata(int windowID){
 		//data to display
 		GUI.Label (new Rect(5,0,windowSizeX-10,lineSize), selectedFish.name);
-		GUI.Label (new Rect(5,lineSize*1,windowSizeX-10,lineSize), "Dead? " + data.isDead.ToString());
-		GUI.Label (new Rect(5,lineSize*2,windowSizeX-10,lineSize), "Total memory utilization: " + data.GetMemoryUtilizationFormated());
-		GUI.Label (new Rect(5,lineSize*3,windowSizeX-10,lineSize), "Total number of CPUs: " + data.cpuCount.ToString());
-		GUI.Label (new Rect(5,lineSize*4,windowSizeX-10,lineSize), "Minute load average: " + data.avgLoad.ToString());
+		if (!data.isSchoolLeader) {
+			GUI.Label (new Rect (5, lineSize * 1, windowSizeX - 10, lineSize), "Dead? " + data.isDead.ToString ());
+			GUI.Label (new Rect (5, lineSize * 2, windowSizeX - 10, lineSize), "Total memory utilization: " + data.GetMemoryUtilizationFormated ());
+			GUI.Label (new Rect (5, lineSize * 3, windowSizeX - 10, lineSize), "Total number of CPUs: " + data.cpuCount.ToString ());
+			GUI.Label (new Rect (5, lineSize * 4, windowSizeX - 10, lineSize), "Minute load average: " + data.avgLoad.ToString ());
+		} else {
+			GUI.Label(new Rect(5, lineSize * 1, windowSizeX - 10, lineSize), "Number of Working Nodes: " + data.numberOfLivingFollowers);
+			GUI.Label(new Rect(5, lineSize * 2, windowSizeX - 10, lineSize), "Number of Dead Nodes: " + data.numberOfDeadFollowers);
+			GUI.Label(new Rect(5, lineSize * 3, windowSizeX - 10, lineSize), "Total Number of Nodes: "+ data.numberOfFollowers);
+		}
 		/*
 		if (GUI.Button (new Rect(windowSizeX-lineSize,0,lineSize,lineSize), "X")) {
 			showGUI = false;

@@ -17,9 +17,6 @@ public class DataRetriever : MonoBehaviour
 	int sandhillsPort = 8654;
 	string redClusterURL = "129.93.239.169";
 	int redClusterPort = 8651;
-	int bytes;
-	Socket soc;
-	byte[] bytesReceived;
 	string sandhillsXML = "test";
 	string redClusterXML = "test";
 
@@ -108,6 +105,10 @@ public class DataRetriever : MonoBehaviour
 						} while (reader.ReadToNextSibling("METRIC"));
 					}
 				} while (reader.ReadToNextSibling("HOST"));
+			}
+			FishData clusterData = clusterFish.GetComponent<FishData>();
+			if(clusterData.isSchoolLeader){
+				clusterData.GetNumberOfFish();
 			}
 		}
 		reader.Close ();

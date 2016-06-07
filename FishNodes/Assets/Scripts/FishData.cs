@@ -19,6 +19,10 @@ public class FishData : MonoBehaviour {
 	public int fishSize = 1;
 	bool flash = false;
 	Vector3 origin = new Vector3(0,25,0);
+	
+	public int numberOfFollowers;
+	public int numberOfLivingFollowers;
+	public int numberOfDeadFollowers;
 
 	void Awake(){
 		anim = GetComponent<Animator> ();
@@ -58,7 +62,7 @@ public class FishData : MonoBehaviour {
 
 	public string GetMemoryUtilizationFormated(){
 		double temp = (memoryUtilization * 0.000001);
-		string memUtilString = temp.ToString() + " MB";
+		string memUtilString = temp.ToString() + " GB";
 		return memUtilString;
 	}
 
@@ -67,8 +71,8 @@ public class FishData : MonoBehaviour {
 		if (scalePercentage < 0.25f) {
 			scalePercentage = 0.25f;
 			flash = false;
-		} else if (scalePercentage > 1.2) {
-			scalePercentage = 1.25f;
+		} else if (scalePercentage > 1) {
+			scalePercentage = 1.20f;
 			flash = true;
 		} else {
 			flash = false;
@@ -76,4 +80,23 @@ public class FishData : MonoBehaviour {
 		scalePercentage = scalePercentage * 20;
 		transform.localScale = new Vector3(scalePercentage,scalePercentage,scalePercentage);
 	}
+	
+	public void GetNumberOfFish(){
+		numberOfFollowers = 0;
+		numberOfLivingFollowers = 0;
+		numberOfDeadFollowers = 0;
+		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
+		foreach (GameObject fish in listOfFish) {
+			FishData data = fish.GetComponent<FishData>();
+			if(data.school.Equals(school) && fish.transform != transform){
+				numberOfFollowers++;
+				if(data.isDead){
+					numberOfDeadFollowers++;
+				}else{
+					numberOfLivingFollowers++;
+				}
+			}
+		}
+	}
+
 }
