@@ -61,10 +61,6 @@ public class DataRetriever : MonoBehaviour
 
 		ParseXML ("Data/sandhillsXML.xml");
 		ParseXML ("Data/redClusterXML.xml");
-
-		Transform UItext = transform.FindChild("UItext");
-		UItext.FindChild ("Loading Text").gameObject.SetActive(false);
-		UItext.FindChild ("Running Text").gameObject.SetActive(true);
 	}
 
 	void ParseXML (string xmlInput)

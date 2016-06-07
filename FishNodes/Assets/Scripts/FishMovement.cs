@@ -8,7 +8,7 @@ using System.Collections;
 [SelectionBase]
 public class FishMovement : MonoBehaviour {
 	
-	float ZONE_ONE_DIST = 5f;
+	float ZONE_ONE_DIST = 2f;
 	float ZONE_TWO_DIST = 20f;
 	float ZONE_THREE_DIST = 40f;
 
