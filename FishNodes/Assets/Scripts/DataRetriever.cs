@@ -27,6 +27,12 @@ public class DataRetriever : MonoBehaviour
 		//GetXML ();
 	}
 
+	void Update(){
+		if(Input.GetKeyDown(KeyCode.R)){
+			GetXML();
+		}
+	}
+
 	string tcpConnect (string ip, int port)
 	{
 		
@@ -53,11 +59,14 @@ public class DataRetriever : MonoBehaviour
 		sandhillsXML = tcpConnect (sandhillsURL, sandhillsPort);
 		redClusterXML = tcpConnect (redClusterURL, redClusterPort);
 
-		File.WriteAllText ("Data/sandhillsXML.xml", sandhillsXML);
-		File.WriteAllText ("Data/redClusterXML.xml", redClusterXML);
+		File.WriteAllText ("sandhillsXML.xml", sandhillsXML);
+		File.WriteAllText ("redClusterXML.xml", redClusterXML);
 
-		ParseXML ("Data/sandhillsXML.xml");
-		ParseXML ("Data/redClusterXML.xml");
+		ParseXML ("sandhillsXML.xml");
+		ParseXML ("redClusterXML.xml");
+		
+		File.Delete ("sandhillsXML.xml");
+		File.Delete ("redClusterXML.xml");
 	}
 
 	void ParseXML (string xmlInput)
@@ -93,12 +102,12 @@ public class DataRetriever : MonoBehaviour
 							
 							} else if (metricName.Equals ("load_one")) {
 								fishData.avgLoad = float.Parse (reader.GetAttribute ("VAL"));
-								if (fishData.avgLoad != 0 && fishData.cpuCount != 0) {
+								if (fishData.cpuCount != 0) {
 									fishData.Resize ();
 								}
 							} else if (metricName.Equals ("cpu_num")) {
 								fishData.cpuCount = int.Parse (reader.GetAttribute ("VAL"));
-								if (fishData.avgLoad != 0 && fishData.cpuCount != 0) {
+								if (fishData.cpuCount != 0) {
 									fishData.Resize ();
 								}
 							}

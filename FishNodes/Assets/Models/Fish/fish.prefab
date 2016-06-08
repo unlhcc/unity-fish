@@ -886,7 +886,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!95 &9577922
 Animator:
@@ -924,6 +924,9 @@ MonoBehaviour:
   cpuCount: 0
   avgLoad: 0
   fishSize: 1
+  numberOfFollowers: 0
+  numberOfLivingFollowers: 0
+  numberOfDeadFollowers: 0
 --- !u!114 &11491872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -936,7 +939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swimSpeed: 3
-  turnSpeed: 3
+  turnSpeed: 4
   leaderFish: {fileID: 0}
 --- !u!136 &13691282
 CapsuleCollider:
@@ -1027,7 +1030,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Constraints
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_ReceiveShadows
@@ -1084,6 +1087,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: swimSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: turnSpeed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

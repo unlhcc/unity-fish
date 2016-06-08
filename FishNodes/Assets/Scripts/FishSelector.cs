@@ -20,7 +20,7 @@ public class FishSelector : MonoBehaviour {
 	int lineSize = 20;
 	
 	void Update () {
-		if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
+		if(Input.GetMouseButtonDown(0)){
 			screenSizeX = Camera.main.pixelWidth;
 			windowSizeX = 260f;
 			screenSizeY = Camera.main.pixelHeight;
@@ -35,6 +35,9 @@ public class FishSelector : MonoBehaviour {
 			}else{
 				showGUI = false;
 			}
+		}
+		if(Input.GetMouseButtonDown(1)){
+			showGUI = false;
 		}
 
 	}

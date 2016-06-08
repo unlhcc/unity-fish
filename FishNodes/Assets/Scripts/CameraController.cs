@@ -27,8 +27,12 @@ public class CameraController : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha1)){
 			SwitchCamera(1);
-		}else if(Input.GetKeyDown(KeyCode.Alpha2)){
+		}
+		if(Input.GetKeyDown(KeyCode.Alpha2)){
 			SwitchCamera(2);
+		}
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			Application.Quit();
 		}
 	}
 }

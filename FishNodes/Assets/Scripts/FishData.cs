@@ -16,7 +16,7 @@ public class FishData : MonoBehaviour {
 	public int memoryUtilization;
 	public int cpuCount;
 	public float avgLoad;
-	public int fishSize = 1;
+	public int baseScale = 20;
 	bool flash = false;
 	Vector3 origin = new Vector3(0,25,0);
 	
@@ -72,12 +72,12 @@ public class FishData : MonoBehaviour {
 			scalePercentage = 0.25f;
 			flash = false;
 		} else if (scalePercentage > 1) {
-			scalePercentage = 1.20f;
+			scalePercentage = 1.2f;
 			flash = true;
 		} else {
 			flash = false;
 		}
-		scalePercentage = scalePercentage * 20;
+		scalePercentage = scalePercentage * baseScale;
 		transform.localScale = new Vector3(scalePercentage,scalePercentage,scalePercentage);
 	}
 	

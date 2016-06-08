@@ -11,28 +11,34 @@ public class FishSpawner : MonoBehaviour {
 
 	void Update(){
 		//press keycodes to spawn fish
-		if(Input.GetKeyDown(KeyCode.F)){//sand leader
+		if(Input.GetKeyDown(KeyCode.U)){//sand leader
 			GameObject fish = SpawnFish("sandhills", true);
 			fish.GetComponent<FishData>().memoryUtilization = 12345678;
-		}if(Input.GetKeyDown(KeyCode.R)){//red leader
+		}if(Input.GetKeyDown(KeyCode.O)){//red leader
 			SpawnFish("red-workers", true);
 		}
-		if(Input.GetKeyDown(KeyCode.L)){//spwan 50 sand followers
+		if(Input.GetKeyDown(KeyCode.I)){//spwan 50 sand followers
 			for(int i=0; i<50; i++){
 				SpawnFish("sandhills", false);
 			}
 		}
-		if(Input.GetKeyDown(KeyCode.O)){//spawn 50 red followers
+		if(Input.GetKeyDown(KeyCode.P)){//spawn 50 red followers
 			for(int i=0; i<50; i++){
 				SpawnFish("red-workers", false);
 			}
 		}
-		if(Input.GetKeyDown(KeyCode.Y)){//kill all leader fish
+		if(Input.GetKeyDown(KeyCode.L)){//kill all leader fish
 			GameObject[] allFish = GameObject.FindGameObjectsWithTag("fish");
 			foreach(GameObject fish in allFish){
 				if(fish.GetComponent<FishData>().isSchoolLeader){
 					Destroy(fish);
 				}
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.K)){//kill ALL fish
+			GameObject[] allFish = GameObject.FindGameObjectsWithTag("fish");
+			foreach(GameObject fish in allFish){
+				Destroy(fish);
 			}
 		}
 	}
