@@ -18,13 +18,20 @@ public class FishMovement : MonoBehaviour {
 	FishData data;
 	Rigidbody rb;
 	
-	float xRot;
-	float yRot;
-	float zRot;
+	float xRot=0;
+	float yRot=0;
+	float zRot=0;
 
 	public GameObject leaderFish;
+	GameObject tank;
 
 	void Start(){
+		tank = GameObject.Find ("tank");
+		swimSpeed = tank.transform.localScale.x * swimSpeed;
+		turnSpeed = tank.transform.localScale.x * turnSpeed;
+		ZONE_ONE_DIST = tank.transform.localScale.x * ZONE_ONE_DIST;
+		ZONE_TWO_DIST = tank.transform.localScale.x * ZONE_TWO_DIST;
+		ZONE_THREE_DIST = tank.transform.localScale.x * ZONE_THREE_DIST;
 		data = GetComponent<FishData> ();
 		rb = GetComponent<Rigidbody> ();
 		leaderFish = GameObject.Find (data.school);
@@ -32,11 +39,12 @@ public class FishMovement : MonoBehaviour {
 
 	//moves the fish in a random direction, but within rotational bounds.
 	void MoveRandom(){
-		if (transform.rotation.eulerAngles.z > 5 && transform.rotation.eulerAngles.z <= 180) {
+		/*if (transform.rotation.eulerAngles.z > 5 && transform.rotation.eulerAngles.z <= 180) {
 			zRot = -1;
 		} else if (transform.rotation.eulerAngles.z < 355 && transform.rotation.eulerAngles.z > 180) {
 			zRot = 1;
-		}/* else {
+		}*/
+		/* else {
 			zRot = (Random.value * 2) - 1;
 		}*/
 		
@@ -100,5 +108,6 @@ public class FishMovement : MonoBehaviour {
 		} else {//dead fish rolls onto it's side
 			MoveDead();
 		}
+		transform.Rotate (0,0,-transform.rotation.eulerAngles.z);
 	}
 }

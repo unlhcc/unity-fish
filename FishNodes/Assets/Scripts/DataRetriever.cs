@@ -81,6 +81,7 @@ public class DataRetriever : MonoBehaviour
 			} else {
 				clusterFish.GetComponent<FishData> ().ReviveFish ();
 			}
+			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*20);
 			if (reader.ReadToDescendant ("HOST")) {
 				do {
 					string hostName = reader.GetAttribute ("NAME");
@@ -93,6 +94,7 @@ public class DataRetriever : MonoBehaviour
 						fish.GetComponent<FishData> ().ReviveFish ();
 					}
 					FishData fishData = fish.GetComponent<FishData> ();
+					fishData.Resize(transform.localScale.x*20);
 					if (reader.ReadToDescendant ("METRIC")) {
 						do {
 							//set the follower fish's data

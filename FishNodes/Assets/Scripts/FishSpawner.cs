@@ -50,10 +50,7 @@ public class FishSpawner : MonoBehaviour {
 	 */
 	public GameObject SpawnFish(string leader, bool isLeader){
 
-		GameObject fish = Instantiate (fishPrefab, new Vector3 (transform.position.x + (Random.Range (-40, 40)* transform.lossyScale.z),
-		                                                        transform.position.y + ((50 + Random.Range (-40, 40))* transform.lossyScale.z),
-		                                                       transform.position.z + (Random.Range (-40, 40) * transform.lossyScale.z)),
-		                               Quaternion.identity) as GameObject;
+		GameObject fish = Instantiate (fishPrefab, transform.FindChild("center").transform.position, Quaternion.identity) as GameObject;
 
 		FishData fd = fish.GetComponent<FishData> ();
 		FishMovement fm = fish.GetComponent<FishMovement>();
@@ -61,8 +58,6 @@ public class FishSpawner : MonoBehaviour {
 		if (isLeader) {
 			fd.name = leader;
 			fd.isSchoolLeader = isLeader;
-			fm.swimSpeed += 3f;
-			fm.turnSpeed += 3f;
 			GameObject[] allfish = GameObject.FindGameObjectsWithTag ("fish");
 			foreach (GameObject followerFish in allfish) {
 				if (followerFish.GetComponent<FishData> ().school.Equals (leader)) {

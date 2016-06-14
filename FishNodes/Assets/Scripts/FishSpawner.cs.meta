@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 8a5694d5f5f27f241a28e8290e996ccd
-timeCreated: 1464107491
+timeCreated: 1465842910
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fishPrefab: {fileID: 176066, guid: 0f45930c89072cb4e867de8e980132cc, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -3,15 +3,19 @@ using System.Collections;
 
 public class FishApperanceChanger : MonoBehaviour {
 
+	GameObject tank;
+	float tankScale;
+
 	void Start () {
-	
+		tank = GameObject.Find ("tank");
+		tankScale = tank.transform.localScale.x;
 	}
 
 	void ChangeFishSize(int sizeModifer){
 		GameObject[] allFish = GameObject.FindGameObjectsWithTag ("fish");
 		foreach(GameObject fish in allFish){
 			FishData fishData = fish.GetComponent<FishData>();
-			fishData.baseScale += sizeModifer;
+			fishData.baseScale += sizeModifer * tankScale;
 			fishData.Resize();
 		}
 		Debug.Log(allFish[1].GetComponent<FishData>().baseScale);
@@ -21,7 +25,7 @@ public class FishApperanceChanger : MonoBehaviour {
 		GameObject[] allFish = GameObject.FindGameObjectsWithTag ("fish");
 		foreach(GameObject fish in allFish){
 			FishMovement fishMove = fish.GetComponent<FishMovement>();
-			fishMove.swimSpeed += speedModifer;
+			fishMove.swimSpeed += speedModifer * tankScale;
 		}
 		Debug.Log(allFish[1].GetComponent<FishMovement>().swimSpeed);
 	}
@@ -30,7 +34,7 @@ public class FishApperanceChanger : MonoBehaviour {
 		GameObject[] allFish = GameObject.FindGameObjectsWithTag ("fish");
 		foreach(GameObject fish in allFish){
 			FishMovement fishMove = fish.GetComponent<FishMovement>();
-			fishMove.ZONE_TWO_DIST += zoneModifer;
+			fishMove.ZONE_TWO_DIST += zoneModifer * tankScale;
 			fishMove.ZONE_THREE_DIST += (zoneModifer*2);
 		}
 		Debug.Log(allFish[1].GetComponent<FishMovement>().ZONE_TWO_DIST +", "+ allFish[1].GetComponent<FishMovement>().ZONE_THREE_DIST );
