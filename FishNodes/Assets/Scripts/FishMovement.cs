@@ -20,13 +20,17 @@ public class FishMovement : MonoBehaviour {
 	
 	float xRot=0;
 	float yRot=0;
-	float zRot=0;
 
 	public GameObject leaderFish;
 	GameObject tank;
+	Vector3 tankCenter;
+	float tankSphereDistance;
+	float cornerScale = 0.70f;
 
-	void Start(){
+	void Awake(){
 		tank = GameObject.Find ("tank");
+		tankCenter = tank.transform.FindChild ("center").transform.position;
+		tankSphereDistance = Vector3.Distance (tankCenter, tank.transform.FindChild ("corner").transform.position) * cornerScale;
 		swimSpeed = tank.transform.localScale.x * swimSpeed;
 		turnSpeed = tank.transform.localScale.x * turnSpeed;
 		ZONE_ONE_DIST = tank.transform.localScale.x * ZONE_ONE_DIST;
@@ -39,29 +43,62 @@ public class FishMovement : MonoBehaviour {
 
 	//moves the fish in a random direction, but within rotational bounds.
 	void MoveRandom(){
-		/*if (transform.rotation.eulerAngles.z > 5 && transform.rotation.eulerAngles.z <= 180) {
-			zRot = -1;
-		} else if (transform.rotation.eulerAngles.z < 355 && transform.rotation.eulerAngles.z > 180) {
-			zRot = 1;
-		}*/
-		/* else {
-			zRot = (Random.value * 2) - 1;
-		}*/
-		
-		if (transform.rotation.eulerAngles.x > 40 && transform.rotation.eulerAngles.x <= 180) {
-			xRot = -1;
-		} else if (transform.rotation.eulerAngles.x < 320 && transform.rotation.eulerAngles.x > 180) {
-			xRot = 1;
-		}/* else {
-			xRot = (Random.value * 2) - 1;
-		}*/
+		if (tankSphereDistance < Vector3.Distance (transform.position, tankCenter)) {
+			transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.LookRotation (tankCenter - transform.position), Time.deltaTime / turnSpeed);
+		} else {
+			RaycastHit hitLeft;
+			RaycastHit hitRight;
+			RaycastHit hitUp;
+			RaycastHit hitDown;
+			Vector3 direction = transform.forward;
+			Vector3 left = Quaternion.AngleAxis (-5, transform.up) * direction;
+			Vector3 right = Quaternion.AngleAxis (5, transform.up) * direction;
+			Vector3 up = Quaternion.AngleAxis (-5, transform.right) * direction;
+			Vector3 down = Quaternion.AngleAxis (5, transform.right) * direction;
+			Debug.DrawRay (transform.position, left * 5 * tank.transform.localScale.x, Color.yellow);
+			Debug.DrawRay (transform.position, right * 5 * tank.transform.localScale.x, Color.yellow);
+			Debug.DrawRay (transform.position, up * 5 * tank.transform.localScale.x, Color.blue);
+			Debug.DrawRay (transform.position, down * 5 * tank.transform.localScale.x, Color.red);
+			bool hit1 = Physics.Raycast (transform.position, left, out hitLeft, 5 * tank.transform.localScale.x);
+			bool hit2 = Physics.Raycast (transform.position, right, out hitRight, 5 * tank.transform.localScale.x);
+			bool hit3 = Physics.Raycast (transform.position, up, out hitUp, 5 * tank.transform.localScale.x);
+			bool hit4 = Physics.Raycast (transform.position, down, out hitDown, 5 * tank.transform.localScale.x);
+			if (hit1 || hit2) {
+				float angleLeft = Mathf.Rad2Deg * (Mathf.Acos (Vector3.Dot (left, hitLeft.normal)));
+				float angleRight = Mathf.Rad2Deg * (Mathf.Acos (Vector3.Dot (right, hitRight.normal)));
+				//Debug.Log ("left="+angleLeft+", right="+angleRight);
+				if (angleLeft > angleRight) {
+					yRot = 2;
+				} else if (hitLeft.collider != hitRight.collider) {
+					yRot = 0;
+				} else {
+					yRot = -2;
+				}
+			}else{
+				yRot = 0;
+			} if(hit3 || hit4){
+				float angleUp = Mathf.Rad2Deg * (Mathf.Acos (Vector3.Dot (up, hitUp.normal)));
+				float angleDown = Mathf.Rad2Deg * (Mathf.Acos (Vector3.Dot (down, hitDown.normal)));
+				//Debug.Log ("left="+angleLeft+", right="+angleRight);
+				if (angleUp > angleDown) {
+					xRot = 2;
+				} else if (hitUp.collider != hitDown.collider) {
+					xRot = 0;
+				} else {
+					xRot = -2;
+				}
+			}else{
+				if (transform.rotation.eulerAngles.x > 40 && transform.rotation.eulerAngles.x <= 180) {
+					xRot = -1;
+				} else if (transform.rotation.eulerAngles.x < 320 && transform.rotation.eulerAngles.x > 180) {
+					xRot = 1;
+				}
+			}
 
-		yRot = (Random.value * 2) - 1;
-		//Debug.Log ("x = " + xRot +"; z = "+ zRot + "; y = " + yRot + ";");
-		transform.Rotate (new Vector3 (xRot, 0, zRot) * Time.deltaTime * turnSpeed, Space.Self);
-		transform.RotateAround (transform.position,Vector3.up,Time.deltaTime * turnSpeed * yRot);
+			transform.Rotate (new Vector3 (xRot, yRot, 0) * Time.deltaTime * turnSpeed, Space.Self);
+			//transform.RotateAround (transform.position, Vector3.up, Time.deltaTime * turnSpeed * yRot);
+		}
 		transform.Translate (Vector3.forward * swimSpeed * Time.deltaTime);
-
 	}
 
 	//how the fish should move if dead(aka float to the top).
