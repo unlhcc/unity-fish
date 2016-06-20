@@ -19,7 +19,10 @@ public class FishData : MonoBehaviour {
 	public float baseScale = 1f;
 	bool flash = false;
 	GameObject tank;
+	GameObject tankWalls;
+	Vector3 corner;
 	Vector3 origin;
+	float cornerDistance;
 	
 	public int numberOfFollowers;
 	public int numberOfLivingFollowers;
@@ -29,13 +32,16 @@ public class FishData : MonoBehaviour {
 
 	void Awake(){
 		tank = GameObject.Find ("tank");
-		tankWallBack = tank.transform.FindChild("tank walls").transform.FindChild("Plane").transform.position.z;
-		tankWallLeft = tank.transform.FindChild("tank walls").transform.FindChild("Plane (1)").transform.position.x;
-		tankWallRight = tank.transform.FindChild("tank walls").transform.FindChild("Plane (2)").transform.position.x;
-		tankWallFront = tank.transform.FindChild("tank walls").transform.FindChild("Plane (3)").transform.position.z;
-		tankWallFloor = tank.transform.FindChild("tank walls").transform.FindChild("tank floor").transform.position.y;
-		tankWallTop = tank.transform.FindChild("tank walls").transform.FindChild("tank top").transform.position.y;
+		tankWalls = tank.transform.FindChild ("tank walls").gameObject;
+		tankWallBack = tankWalls.transform.FindChild("Plane").transform.position.z;
+		tankWallLeft = tankWalls.transform.FindChild("Plane (1)").transform.position.x;
+		tankWallRight = tankWalls.transform.FindChild("Plane (2)").transform.position.x;
+		tankWallFront = tankWalls.transform.FindChild("Plane (3)").transform.position.z;
+		tankWallFloor = tankWalls.transform.FindChild("tank floor").transform.position.y;
+		tankWallTop = tankWalls.transform.FindChild("tank top").transform.position.y;
 		origin = tank.transform.FindChild ("center").transform.position;
+		corner = tank.transform.FindChild ("corner").transform.position;
+		cornerDistance = Vector3.Distance (origin,corner);
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody> ();
 		mat = GetComponentInChildren<Renderer> ().material;
@@ -48,9 +54,9 @@ public class FishData : MonoBehaviour {
 			mat.color = Color.Lerp(fishColor,new Color(fishColor.r,fishColor.g,1),t);
 		}
 		//float distance = Vector3.Distance (transform.position, origin);
-		if(transform.position.x > tankWallRight || transform.position.x < tankWallLeft ||
+		if((tankWalls.activeSelf && (transform.position.x > tankWallRight || transform.position.x < tankWallLeft ||
 			transform.position.y > tankWallTop || transform.position.y < tankWallFloor ||
-			transform.position.z > tankWallBack || transform.position.z < tankWallFront){
+			transform.position.z > tankWallBack || transform.position.z < tankWallFront))||(cornerDistance < Vector3.Distance(transform.position,origin))){
 				transform.position = origin;
 		}
 	}

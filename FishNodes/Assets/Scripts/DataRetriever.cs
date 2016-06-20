@@ -23,7 +23,7 @@ public class DataRetriever : MonoBehaviour
 	void Start ()
 	{
 		fishSpawner = GetComponent<FishSpawner> ();
-		InvokeRepeating ("GetXML", 1, 600);
+		//InvokeRepeating ("GetXML", 1, 600);
 		//GetXML ();
 	}
 

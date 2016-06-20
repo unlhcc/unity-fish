@@ -55,7 +55,7 @@ public class CreateWallFromAngle : EditorWindow {
 
 		rotAmount = EditorGUILayout.IntField ("rotation amount",rotAmount);
 
-		if (GUILayout.Button ("create next wall") && Selection.transforms.Length != 0) {
+		if (GUILayout.Button ("create next wall with child") && Selection.transforms.Length != 0) {
 			GameObject insideWall = Instantiate (Selection.activeGameObject,
 				new Vector3(Selection.activeTransform.position.x,Selection.activeTransform.position.y,Selection.activeTransform.position.z+2.5f),
 				Selection.activeTransform.rotation) as GameObject;
@@ -72,6 +72,11 @@ public class CreateWallFromAngle : EditorWindow {
 			CreateWall (insideWall.transform);
 			rotAmount = -rotAmount;
 
+			Selection.activeTransform = null;
+		}
+		if (GUILayout.Button ("create next wall") && Selection.transforms.Length != 0) {
+			float tanAmount = (Mathf.Tan (((Mathf.Abs (rotAmount)) / 2) * Mathf.Deg2Rad));
+			CreateWall (Selection.activeTransform);
 			Selection.activeTransform = null;
 		}
 	}

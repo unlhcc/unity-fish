@@ -25,7 +25,7 @@ public class FishMovement : MonoBehaviour {
 	GameObject tank;
 	Vector3 tankCenter;
 	float tankSphereDistance;
-	float cornerScale = 0.70f;
+	float cornerScale = 0.5f;
 
 	void Awake(){
 		tank = GameObject.Find ("tank");
