@@ -19,6 +19,17 @@ public class Teleporter : MonoBehaviour {
 		lineRenderer.SetPosition (0, transform.position);
 		lineRenderer.SetPosition (1, transform.position);
 		var device = SteamVR_Controller.Input((int)trackedObj.index);
+
+		if(device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)){
+			GameObject.Find ("tank").GetComponent<DataRetriever> ().GetXML();
+		}
+		if(device.GetPressDown (SteamVR_Controller.ButtonMask.Grip)){
+			GameObject[] allFish = GameObject.FindGameObjectsWithTag("fish");
+			foreach(GameObject fish in allFish){
+				Destroy(fish);
+			}
+		}
+
 		if (device.GetPressDown (SteamVR_Controller.ButtonMask.Trigger)) {
 			turnOnLazer = true;
 		}
@@ -26,16 +37,21 @@ public class Teleporter : MonoBehaviour {
 			turnOnLazer = false;
 		}
 		if(turnOnLazer){
-			Ray ray;
 			RaycastHit hit;
 			bool wasHit = Physics.Raycast (transform.position, transform.TransformDirection(Vector3.forward), out hit);
 			if(wasHit){
-				if (device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad) && hit.collider.gameObject.tag == "Warp") {
-					Transform warpPoint = hit.collider.gameObject.transform;
-					camRig.transform.position = warpPoint.position;
-					camRig.transform.rotation = warpPoint.rotation;
+				if (device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad) ){
+					if (hit.collider.gameObject.tag == "Warp") {
+						Transform warpPoint = hit.collider.gameObject.transform;
+						camRig.transform.position = warpPoint.position;
+						camRig.transform.rotation = warpPoint.rotation;
 
-					Physics.Raycast (transform.position, transform.TransformDirection(Vector3.forward), out hit);
+						Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out hit);
+					} else if (hit.collider.gameObject.tag == "fish") {
+						transform.parent.FindChild ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
+					} else {
+						transform.parent.FindChild ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
+					}
 				}
 				lineRenderer.SetPosition (0,transform.position);
 				lineRenderer.SetPosition (1, hit.point);

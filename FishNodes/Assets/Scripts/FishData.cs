@@ -62,14 +62,16 @@ public class FishData : MonoBehaviour {
 	}
 	
 	public void KillFish(){
-		anim.SetBool ("isSwimming", false);
+		//anim.SetBool ("isSwimming", false);
+		anim.enabled = false;
 		isDead = true;
 		rb.useGravity = true;
 		SetColor (Color.black);
 	}
 
 	public void ReviveFish(){
-		anim.SetBool ("isSwimming", true);
+		//anim.SetBool ("isSwimming", true);
+		anim.enabled = true;
 		isDead = false;
 		rb.useGravity = false;
 		SetColor (fishColor);
@@ -115,7 +117,7 @@ public class FishData : MonoBehaviour {
 		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
 		foreach (GameObject fish in listOfFish) {
 			FishData data = fish.GetComponent<FishData>();
-			if(data.school.Equals(school) && fish.transform != transform){
+			if(data.school.Equals(school) && !data.isSchoolLeader){
 				numberOfFollowers++;
 				if(data.isDead){
 					numberOfDeadFollowers++;

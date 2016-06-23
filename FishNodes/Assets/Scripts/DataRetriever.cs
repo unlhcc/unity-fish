@@ -4,6 +4,7 @@
 */
 using UnityEngine;
 using System.Collections;
+using System.Diagnostics;
 using System.Xml;
 using System.IO;
 using System.Net;
@@ -17,8 +18,6 @@ public class DataRetriever : MonoBehaviour
 	int sandhillsPort = 8654;
 	string redClusterURL = "129.93.239.169";
 	int redClusterPort = 8651;
-	string sandhillsXML = "test";
-	string redClusterXML = "test";
 
 	void Start ()
 	{
@@ -33,9 +32,8 @@ public class DataRetriever : MonoBehaviour
 		}
 	}
 
-	string tcpConnect (string ip, int port)
+	/*string tcpConnect (string ip, int port)
 	{
-		
 		TcpClient tcp = new TcpClient (AddressFamily.InterNetwork);
 		tcp.Connect (IPAddress.Parse (ip), port);
 		
@@ -48,32 +46,59 @@ public class DataRetriever : MonoBehaviour
 
 		return output;
 	}
-	
-	void GetXML ()
+	*/
+	public void GetXML ()
 	{
-		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
-		foreach (GameObject fish in listOfFish) {
-			fish.GetComponent<FishData> ().KillFish ();
-		}
-
+		/*
 		sandhillsXML = tcpConnect (sandhillsURL, sandhillsPort);
 		redClusterXML = tcpConnect (redClusterURL, redClusterPort);
 
 		File.WriteAllText ("sandhillsXML.xml", sandhillsXML);
 		File.WriteAllText ("redClusterXML.xml", redClusterXML);
+		*/
 
-		ParseXML ("sandhillsXML.xml");
-		ParseXML ("redClusterXML.xml");
-		
+		StartCoroutine (ParseXML ("sandhillsXML.xml", sandhillsURL, sandhillsPort));
+		StartCoroutine (ParseXML ("redClusterXML.xml", redClusterURL, redClusterPort));
+		/*
 		File.Delete ("sandhillsXML.xml");
 		File.Delete ("redClusterXML.xml");
+		*/
 	}
 
-	void ParseXML (string xmlInput)
-	{
+	IEnumerator ParseXML (string xmlInput, string url, int port){
+
+		GameObject loadingFish;
+		try{
+			loadingFish = GameObject.Find ("[CameraRig]").transform.FindChild ("GUIcanvas").FindChild ("LoadingFish").gameObject;
+		}catch{
+			loadingFish = new GameObject ();
+			loadingFish.name = "loadingFish";
+		}
+
+		Process downloader = new Process ();
+		downloader.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+		downloader.StartInfo.FileName = "Downloader.exe";
+		downloader.StartInfo.Arguments = xmlInput + " " + url + " " + port;
+		downloader.Start();
+		while(!downloader.HasExited){
+			loadingFish.SetActive (true);
+			yield return null;
+		}
+
+		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
+
+		int fishCount = 0;
+
 		XmlTextReader reader = new XmlTextReader (xmlInput);
 		if (reader.ReadToFollowing ("CLUSTER")) {
 			string clusterName = reader.GetAttribute ("NAME");
+
+			foreach (GameObject fish in listOfFish) {
+				if(!fish.GetComponent<FishData>().isSchoolLeader && fish.GetComponent<FishData>().school.Equals(clusterName)){
+					fish.GetComponent<FishData> ().isDead = true;
+				}
+			}
+
 			GameObject clusterFish = GameObject.Find (clusterName);
 			if (clusterFish == null) {
 				clusterFish = fishSpawner.SpawnFish (clusterName, true);
@@ -81,7 +106,7 @@ public class DataRetriever : MonoBehaviour
 			} else {
 				clusterFish.GetComponent<FishData> ().ReviveFish ();
 			}
-			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*20);
+			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*(18));
 			if (reader.ReadToDescendant ("HOST")) {
 				do {
 					string hostName = reader.GetAttribute ("NAME");
@@ -94,7 +119,7 @@ public class DataRetriever : MonoBehaviour
 						fish.GetComponent<FishData> ().ReviveFish ();
 					}
 					FishData fishData = fish.GetComponent<FishData> ();
-					fishData.Resize(transform.localScale.x*20);
+					fishData.Resize(transform.localScale.x*(12));
 					if (reader.ReadToDescendant ("METRIC")) {
 						do {
 							//set the follower fish's data
@@ -115,153 +140,33 @@ public class DataRetriever : MonoBehaviour
 							}
 						} while (reader.ReadToNextSibling("METRIC"));
 					}
+					fishCount++;
+					yield return new WaitForFixedUpdate();
+					yield return new WaitForFixedUpdate();
+					yield return new WaitForFixedUpdate();
+					if(fishCount > 50){
+						break;
+					}
 				} while (reader.ReadToNextSibling("HOST"));
 			}
+
+
+			foreach (GameObject fish in listOfFish) {
+				if(fish.GetComponent<FishData> ().isDead && fish.GetComponent<FishData>().school.Equals(clusterName)) {
+					fish.GetComponent<FishData>().KillFish();
+				}
+			}
+
 			FishData clusterData = clusterFish.GetComponent<FishData>();
 			if(clusterData.isSchoolLeader){
 				clusterData.GetNumberOfFish();
 			}
+
 		}
 		reader.Close ();
-	}
-
-	void ParseXMLdoc (string xmlInput)
-	{
-		XmlDocument doc = new XmlDocument ();
-		doc.LoadXml (xmlInput);
-		XmlNodeList ganglias = doc.GetElementsByTagName ("GANGLIA_XML");
-		foreach (XmlNode ganglia in ganglias) {
-			/*
-			ganglia.Attributes["VERSION"].Value;
-			ganglia.Attributes["SOURCE"].Value;
-			*/
-			XmlNodeList gangChildren = ganglia.ChildNodes;
-			foreach (XmlNode gangChild in gangChildren) {
-				/*if(gangChild.Name == "GRID"){
-					ParseGrid(gangChild);
-				}else */
-				if (gangChild.Name == "CLUSTER") {
-					ParseCluster (gangChild);
-				}
-				/*else if(gangChild.Name == "HOST"){
-					ParseHost(gangChild);
-				}*/
-			}
+		loadingFish.SetActive (false);
+		if(loadingFish.name.Equals("loadingFish")){
+			DestroyImmediate (loadingFish);
 		}
-	}
-
-	void ParseGrid (XmlNode grid)
-	{
-		/*grid.Attributes["NAME"].Value;
-		grid.Attributes["AUTHORITY"].Value;
-		grid.Attributes["LOCALTIME"].Value;*/
-
-		foreach (XmlNode gridChild in grid.ChildNodes) {
-			if (gridChild.Name == "CLUSTER") {
-				ParseCluster (gridChild);
-			} else if (gridChild.Name == "GRID") {
-				ParseGrid (gridChild);
-			}
-		}
-	}
-
-	void ParseCluster (XmlNode cluster)
-	{
-		string clusterName = cluster.Attributes ["NAME"].Value;
-		GameObject fish = GameObject.Find (clusterName);
-		if (fish == null) {
-			fish = fishSpawner.SpawnFish (clusterName, true);
-			//create new fish
-		} else {
-			fish.GetComponent<FishData> ().ReviveFish ();
-		}
-
-		FishData fishData = fish.GetComponent<FishData> ();
-
-		/*cluster.Attributes["OWNER"].Value;
-		cluster.Attributes["LATLONG"].Value;
-		cluster.Attributes["URL"].Value;
-		cluster.Attributes["LOCALTIME"].Value;*/
-
-		foreach (XmlNode host in cluster.ChildNodes) {
-			ParseHost (host, fishData.school);
-		}
-	}
-
-	void ParseHost (XmlNode host, string clusterName)
-	{
-		string hostName = host.Attributes ["NAME"].Value;
-		GameObject fish = GameObject.Find (hostName);
-		if (fish == null) {
-			fish = fishSpawner.SpawnFish (clusterName, false);
-			fish.name = hostName;
-		} else {
-			fish.GetComponent<FishData> ().ReviveFish ();
-		}
-		FishData fishData = fish.GetComponent<FishData> ();
-		/*
-		host.Attributes["IP"].Value;
-		host.Attributes["LOCATION"].Value;
-		host.Attributes["TAGS"].Value;
-		host.Attributes["REPORTED"].Value;
-		host.Attributes["TN"].Value;
-		host.Attributes["TMAX"].Value;
-		host.Attributes["DMAX"].Value;
-		host.Attributes["GMOND_STARTED"].Value;
-		 */
-
-		foreach (XmlNode metric in host.ChildNodes) {
-			ParseMetric (metric, fishData);
-		}
-	}
-
-	void ParseMetric (XmlNode metric, FishData fishData)
-	{
-		string metricName = metric.Attributes ["NAME"].Value;
-		if (metricName.Equals ("procstat_gmond_mem")) {
-			fishData.memoryUtilization = int.Parse (metric.Attributes ["VAL"].Value);
-
-		} else if (metricName.Equals ("load_one")) {
-			fishData.avgLoad = float.Parse (metric.Attributes ["VAL"].Value);
-			if (fishData.avgLoad != 0 && fishData.cpuCount != 0) {
-				fishData.Resize ();
-			}
-		} else if (metricName.Equals ("cpu_num")) {
-			fishData.cpuCount = int.Parse (metric.Attributes ["VAL"].Value);
-			if (fishData.avgLoad != 0 && fishData.cpuCount != 0) {
-				fishData.Resize ();
-			}
-		}
-
-		/*metric.Attributes["NAME"].Value;
-			metric.Attributes["VAL"].Value;
-			metric.Attributes["TYPE"].Value;
-			metric.Attributes["UNITS"].Value;
-			metric.Attributes["TN"].Value;
-			metric.Attributes["TMAX"].Value;
-			metric.Attributes["DMAX"].Value;
-			metric.Attributes["SLOPE"].Value;
-			metric.Attributes["SOURCE"].Value;*/
-
-		/*
-		foreach(XmlNode extraData in metric.ChildNodes){
-			ParseExtraData(extraData);
-		}*/
-	}
-
-	void ParseExtraData (XmlNode extraData)
-	{
-		/*
-		foreach(XmlNode extraElem in extraData){
-			string extraElemName = extraElem.Attributes["NAME"].Value;
-			if(extraElemName.Equals("GROUP")){
-				extraElem.Attributes["VAL"].Value;
-			}else if(extraElemName.Equals("DESC")){
-				extraElem.Attributes["VAL"].Value;
-			}else if(extraElemName.Equals("TITLE")){
-				extraElem.Attributes["VAL"].Value;
-			}
-		}
-		*/
 	}
 }

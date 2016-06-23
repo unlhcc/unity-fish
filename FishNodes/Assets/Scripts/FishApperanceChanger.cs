@@ -16,7 +16,7 @@ public class FishApperanceChanger : MonoBehaviour {
 		foreach(GameObject fish in allFish){
 			FishData fishData = fish.GetComponent<FishData>();
 			fishData.baseScale += sizeModifer * tankScale;
-			fishData.Resize();
+			fishData.Resize(fishData.baseScale);
 		}
 		Debug.Log(allFish[1].GetComponent<FishData>().baseScale);
 	}

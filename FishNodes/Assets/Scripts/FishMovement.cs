@@ -136,15 +136,17 @@ public class FishMovement : MonoBehaviour {
 	void Update () {
 		rb.velocity = Vector3.zero;
 		rb.angularVelocity = Vector3.zero;
-		if (!data.isDead) {//if the fish is alive and well
-			if(data.isSchoolLeader || leaderFish == null){//if the fish belongs to noschool or is the leader of its school
-				MoveRandom();
-			}else{//if the fish is a follower of it's school
-				MoveFollow();
+
+		if (!rb.useGravity) {//if the fish is alive and well
+			if (data.isSchoolLeader || leaderFish == null) {//if the fish belongs to noschool or is the leader of its school
+				MoveRandom ();
+			} else {//if the fish is a follower of it's school
+				MoveFollow ();
 			}
+			transform.Rotate (0, 0, -transform.rotation.eulerAngles.z);
 		} else {//dead fish rolls onto it's side
-			MoveDead();
+			MoveDead ();
 		}
-		transform.Rotate (0,0,-transform.rotation.eulerAngles.z);
+
 	}
 }

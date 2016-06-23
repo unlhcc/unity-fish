@@ -563,7 +563,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100.00001, z: 100.00001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.980194, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 479970}
   m_RootOrder: 0
@@ -576,7 +576,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100.00001, z: 100.00001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.980194, y: 0, z: 0}
   m_Children:
   - {fileID: 483716}
   - {fileID: 423438}
@@ -956,7 +956,7 @@ MonoBehaviour:
   memoryUtilization: 0
   cpuCount: 0
   avgLoad: 0
-  baseScale: 20
+  baseScale: 12
   numberOfFollowers: 0
   numberOfLivingFollowers: 0
   numberOfDeadFollowers: 0

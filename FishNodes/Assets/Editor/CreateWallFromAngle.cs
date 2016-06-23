@@ -75,7 +75,6 @@ public class CreateWallFromAngle : EditorWindow {
 			Selection.activeTransform = null;
 		}
 		if (GUILayout.Button ("create next wall") && Selection.transforms.Length != 0) {
-			float tanAmount = (Mathf.Tan (((Mathf.Abs (rotAmount)) / 2) * Mathf.Deg2Rad));
 			CreateWall (Selection.activeTransform);
 			Selection.activeTransform = null;
 		}

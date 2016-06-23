@@ -8,6 +8,6 @@ using System.Collections;
 public class WaterBuoyancy : MonoBehaviour {
 
 	void Awake () {
-		Physics.gravity = new Vector3 (0,5,0);
+		Physics.gravity = new Vector3 (0,5*transform.localScale.z,0);
 	}
 }
