@@ -19,6 +19,8 @@ public class DataRetriever : MonoBehaviour
 	string redClusterURL = "129.93.239.169";
 	int redClusterPort = 8651;
 
+	bool fishLimiter = true;
+
 	void Start ()
 	{
 		fishSpawner = GetComponent<FishSpawner> ();
@@ -29,6 +31,10 @@ public class DataRetriever : MonoBehaviour
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.R)){
 			GetXML();
+		}
+		if(Input.GetKeyDown(KeyCode.E)){
+			fishLimiter = !fishLimiter;
+			UnityEngine.Debug.Log ("Limit number of fish = "+fishLimiter);
 		}
 	}
 
@@ -106,7 +112,7 @@ public class DataRetriever : MonoBehaviour
 			} else {
 				clusterFish.GetComponent<FishData> ().ReviveFish ();
 			}
-			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*(18));
+			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*(30));
 			if (reader.ReadToDescendant ("HOST")) {
 				do {
 					string hostName = reader.GetAttribute ("NAME");
@@ -119,7 +125,7 @@ public class DataRetriever : MonoBehaviour
 						fish.GetComponent<FishData> ().ReviveFish ();
 					}
 					FishData fishData = fish.GetComponent<FishData> ();
-					fishData.Resize(transform.localScale.x*(12));
+					fishData.Resize(transform.localScale.x*(24));
 					if (reader.ReadToDescendant ("METRIC")) {
 						do {
 							//set the follower fish's data
@@ -144,7 +150,7 @@ public class DataRetriever : MonoBehaviour
 					yield return new WaitForFixedUpdate();
 					yield return new WaitForFixedUpdate();
 					yield return new WaitForFixedUpdate();
-					if(fishCount > 50){
+					if(fishLimiter && fishCount >= 50){
 						break;
 					}
 				} while (reader.ReadToNextSibling("HOST"));

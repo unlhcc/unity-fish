@@ -8,11 +8,15 @@ public class Teleporter : MonoBehaviour {
 	SteamVR_TrackedObject trackedObj;
 	LineRenderer lineRenderer;
 	bool turnOnLazer = false;
+	Vector3 startingPos;
+	Quaternion startingRot;
 
 	void Awake () {
 		camRig = GameObject.Find ("[CameraRig]");
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 		lineRenderer = GetComponent<LineRenderer> ();
+		startingPos = camRig.transform.position;
+		startingRot = camRig.transform.rotation;
 	}
 
 	void Update () {
@@ -56,6 +60,9 @@ public class Teleporter : MonoBehaviour {
 				lineRenderer.SetPosition (0,transform.position);
 				lineRenderer.SetPosition (1, hit.point);
 			}
+		}else if(device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad)){
+			camRig.transform.position = startingPos;
+			camRig.transform.rotation = startingRot;
 		}
 	}
 }

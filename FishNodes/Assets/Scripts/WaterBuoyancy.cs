@@ -7,7 +7,14 @@ using System.Collections;
 
 public class WaterBuoyancy : MonoBehaviour {
 
+	public float buoyancyOfWater = 15;
+
 	void Awake () {
-		Physics.gravity = new Vector3 (0,5*transform.localScale.z,0);
+		Physics.gravity = new Vector3 (0,buoyancyOfWater*transform.localScale.z,0);
 	}
+	/*
+	void Update(){
+		Physics.gravity = new Vector3 (0,buoyancyOfWater*transform.localScale.z,0);
+	}
+	*/
 }
