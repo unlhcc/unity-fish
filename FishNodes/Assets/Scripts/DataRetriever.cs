@@ -19,12 +19,13 @@ public class DataRetriever : MonoBehaviour
 	string redClusterURL = "129.93.239.169";
 	int redClusterPort = 8651;
 
-	bool fishLimiter = true;
+	public bool fishLimiter = true;
+	public float fishScaleAmount = 1;
 
 	void Start ()
 	{
 		fishSpawner = GetComponent<FishSpawner> ();
-		//InvokeRepeating ("GetXML", 1, 600);
+		InvokeRepeating ("GetXML", 1, 600);
 		//GetXML ();
 	}
 
@@ -38,7 +39,7 @@ public class DataRetriever : MonoBehaviour
 		}
 	}
 
-	/*string tcpConnect (string ip, int port)
+	string tcpConnect (string ip, int port)
 	{
 		TcpClient tcp = new TcpClient (AddressFamily.InterNetwork);
 		tcp.Connect (IPAddress.Parse (ip), port);
@@ -52,17 +53,9 @@ public class DataRetriever : MonoBehaviour
 
 		return output;
 	}
-	*/
+
 	public void GetXML ()
 	{
-		/*
-		sandhillsXML = tcpConnect (sandhillsURL, sandhillsPort);
-		redClusterXML = tcpConnect (redClusterURL, redClusterPort);
-
-		File.WriteAllText ("sandhillsXML.xml", sandhillsXML);
-		File.WriteAllText ("redClusterXML.xml", redClusterXML);
-		*/
-
 		StartCoroutine (ParseXML ("sandhillsXML.xml", sandhillsURL, sandhillsPort));
 		StartCoroutine (ParseXML ("redClusterXML.xml", redClusterURL, redClusterPort));
 		/*
@@ -74,21 +67,29 @@ public class DataRetriever : MonoBehaviour
 	IEnumerator ParseXML (string xmlInput, string url, int port){
 
 		GameObject loadingFish;
-		try{
+		try {
 			loadingFish = GameObject.Find ("[CameraRig]").transform.FindChild ("GUIcanvas").FindChild ("LoadingFish").gameObject;
-		}catch{
+		} catch {
 			loadingFish = new GameObject ();
 			loadingFish.name = "loadingFish";
 		}
 
-		Process downloader = new Process ();
-		downloader.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-		downloader.StartInfo.FileName = "Downloader.exe";
-		downloader.StartInfo.Arguments = xmlInput + " " + url + " " + port;
-		downloader.Start();
-		while(!downloader.HasExited){
-			loadingFish.SetActive (true);
-			yield return null;
+		if (File.Exists ("Downloader.exe")) {
+			Process downloader = new Process ();
+			downloader.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			downloader.StartInfo.FileName = //"/bin/mono"
+				"Downloader.exe" 
+				;
+			downloader.StartInfo.Arguments =// "Downloader.exe " + 
+				xmlInput + " " + url + " " + port;
+			downloader.Start ();
+			while (!downloader.HasExited) {
+				loadingFish.SetActive (true);
+				yield return null;
+			}
+		} else {
+			string xml = tcpConnect (url, port);
+			File.WriteAllText (xmlInput, xml);
 		}
 
 		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
@@ -112,7 +113,7 @@ public class DataRetriever : MonoBehaviour
 			} else {
 				clusterFish.GetComponent<FishData> ().ReviveFish ();
 			}
-			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*(30));
+			clusterFish.GetComponent<FishData> ().Resize (transform.localScale.x*(30)*fishScaleAmount);
 			if (reader.ReadToDescendant ("HOST")) {
 				do {
 					string hostName = reader.GetAttribute ("NAME");
@@ -125,7 +126,7 @@ public class DataRetriever : MonoBehaviour
 						fish.GetComponent<FishData> ().ReviveFish ();
 					}
 					FishData fishData = fish.GetComponent<FishData> ();
-					fishData.Resize(transform.localScale.x*(24));
+					fishData.Resize(transform.localScale.x*(24)*fishScaleAmount);
 					if (reader.ReadToDescendant ("METRIC")) {
 						do {
 							//set the follower fish's data
