@@ -1,5 +1,4 @@
-Should be run in a 16:9 resolution.
-
+Run FishNodes.exe, then press F11 to sit back and watch the fishes.
 
 controls:
 
@@ -26,3 +25,6 @@ controls:
 '1' change to camera angle 1
 '2' change to camera angle 2
 
+'F11' enter fullscreen
+
+'e' toggle 100 fish limiter

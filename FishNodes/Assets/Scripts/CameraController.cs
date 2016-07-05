@@ -22,17 +22,11 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.F11)){
-			Screen.fullScreen = !Screen.fullScreen;
-		}
 		if(Input.GetKeyDown(KeyCode.Alpha1)){
 			SwitchCamera(1);
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha2)){
 			SwitchCamera(2);
-		}
-		if(Input.GetKeyDown(KeyCode.Escape)){
-			Application.Quit();
 		}
 	}
 }

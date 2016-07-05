@@ -65,10 +65,10 @@ public class FishSelector : MonoBehaviour {
 		//data to display
 		GUI.Label (new Rect(5,0,windowSizeX-10,lineSize), selectedFish.name);
 		if (!data.isSchoolLeader) {
-			GUI.Label (new Rect (5, lineSize * 1, windowSizeX - 10, lineSize), "Dead? " + data.isDead.ToString ());
-			GUI.Label (new Rect (5, lineSize * 2, windowSizeX - 10, lineSize), "Total memory utilization: " + data.GetMemoryUtilizationFormated ());
-			GUI.Label (new Rect (5, lineSize * 3, windowSizeX - 10, lineSize), "Total number of CPUs: " + data.cpuCount.ToString ());
-			GUI.Label (new Rect (5, lineSize * 4, windowSizeX - 10, lineSize), "Minute load average: " + data.avgLoad.ToString ());
+			//GUI.Label (new Rect (5, lineSize * 1, windowSizeX - 10, lineSize), "Dead? " + data.isDead.ToString ());
+			GUI.Label (new Rect (5, lineSize * 1, windowSizeX - 10, lineSize), "Total memory utilization: " + data.GetMemoryUtilizationFormated ());
+			GUI.Label (new Rect (5, lineSize * 2, windowSizeX - 10, lineSize), "Total number of CPUs: " + data.cpuCount.ToString ());
+			GUI.Label (new Rect (5, lineSize * 3, windowSizeX - 10, lineSize), "Minute load average: " + data.avgLoad.ToString ());
 		} else {
 			GUI.Label(new Rect(5, lineSize * 1, windowSizeX - 10, lineSize), "Number of Working Nodes: " + data.numberOfLivingFollowers);
 			GUI.Label(new Rect(5, lineSize * 2, windowSizeX - 10, lineSize), "Number of Dead Nodes: " + data.numberOfDeadFollowers);

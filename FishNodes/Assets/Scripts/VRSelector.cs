@@ -4,6 +4,8 @@ using System.Collections;
 
 public class VRSelector : MonoBehaviour {
 
+	GameObject Fish;
+
 	GameObject FishName;
 
 	GameObject LeaderData;
@@ -32,6 +34,11 @@ public class VRSelector : MonoBehaviour {
 	}
 
 	public void HideCanvas (){
+
+		if(Fish != null){
+			Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+		}
+
 		Color clear = Color.clear;
 
 		TotalNodes.color = clear;
@@ -51,6 +58,14 @@ public class VRSelector : MonoBehaviour {
 
 
 	public void SetCanvas(GameObject fish){
+
+		if(Fish != null){
+			Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+		}
+
+		Fish = fish;
+
+		Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
 
 		//gameObject.SetActive (true);
 		
