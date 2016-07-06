@@ -74,14 +74,16 @@ public class DataRetriever : MonoBehaviour
 			loadingFish.name = "loadingFish";
 		}
 
-		if (File.Exists ("Downloader.exe")) {
+		if (File.Exists ("Downloader.exe") && (Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)) {
 			Process downloader = new Process ();
 			downloader.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			downloader.StartInfo.FileName = //"/bin/mono"
-				"Downloader.exe" 
-				;
-			downloader.StartInfo.Arguments =// "Downloader.exe " + 
-				xmlInput + " " + url + " " + port;
+			if(Application.platform == RuntimePlatform.LinuxPlayer){
+				downloader.StartInfo.FileName = "mono";
+				downloader.StartInfo.Arguments = "Downloader.exe " + xmlInput + " " + url + " " + port;
+			}else{
+				downloader.StartInfo.FileName = "Downloader.exe";
+				downloader.StartInfo.Arguments = xmlInput + " " + url + " " + port;
+			}
 			downloader.Start ();
 			while (!downloader.HasExited) {
 				loadingFish.SetActive (true);
