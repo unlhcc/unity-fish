@@ -98,11 +98,11 @@ public class FishData : MonoBehaviour {
 	public void Resize(){
 		if(cpuCount != 0){
 			float scalePercentage = avgLoad / cpuCount;
-			if (scalePercentage < 0.25f) {
-				scalePercentage = 0.25f;
+			if (scalePercentage < 0.5f) {
+				scalePercentage = 0.45f;
 				flash = false;
 			} else if (scalePercentage > 1) {
-				scalePercentage = 1.2f;
+				scalePercentage = 1.05f;
 				flash = true;
 			} else {
 				flash = false;
