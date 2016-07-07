@@ -88,8 +88,10 @@ public class FishData : MonoBehaviour {
 	}
 
 	public void Resize(float baseScaleAmount){
-		baseScale = baseScaleAmount;
-		transform.localScale = new Vector3(baseScale,baseScale,baseScale);
+		if (baseScale == 1) {
+			baseScale = baseScaleAmount;
+			transform.localScale = new Vector3(baseScale,baseScale,baseScale);
+		}
 		Resize ();
 	}
 
