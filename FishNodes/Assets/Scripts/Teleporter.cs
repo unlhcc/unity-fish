@@ -24,6 +24,7 @@ public class Teleporter : MonoBehaviour {
 		lineRenderer.SetPosition (1, transform.position);
 		var device = SteamVR_Controller.Input((int)trackedObj.index);
 
+		/*
 		if(device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)){
 			GameObject.Find ("tank").GetComponent<DataRetriever> ().GetXML();
 		}
@@ -33,7 +34,7 @@ public class Teleporter : MonoBehaviour {
 				Destroy(fish);
 			}
 		}
-
+		*/
 		if (device.GetPressDown (SteamVR_Controller.ButtonMask.Trigger)) {
 			turnOnLazer = true;
 		}
@@ -44,7 +45,7 @@ public class Teleporter : MonoBehaviour {
 			RaycastHit hit;
 			bool wasHit = Physics.Raycast (transform.position, transform.TransformDirection(Vector3.forward), out hit);
 			if(wasHit){
-				if (device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad) ){
+				if (device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad) || device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)){
 					if (hit.collider.gameObject.tag == "Warp") {
 						Transform warpPoint = hit.collider.gameObject.transform;
 						camRig.transform.position = warpPoint.position;
@@ -62,7 +63,7 @@ public class Teleporter : MonoBehaviour {
 				lineRenderer.SetPosition (0,transform.position);
 				lineRenderer.SetPosition (1, hit.point);
 			}
-		}else if(device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad)){
+		}else if(device.GetPressDown (SteamVR_Controller.ButtonMask.Touchpad) || device.GetPressDown (SteamVR_Controller.ButtonMask.ApplicationMenu)){
 			camRig.transform.position = startingPos;
 			camRig.transform.rotation = startingRot;
 		}
