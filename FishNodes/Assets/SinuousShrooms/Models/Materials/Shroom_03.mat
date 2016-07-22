@@ -191,15 +191,15 @@ Material:
       data:
         first:
           name: _BaseColor1
-        second: {r: 0.45283988, g: 0.17922792, b: 0.625, a: 1}
+        second: {r: 0.8448962, g: 0.85294116, b: 0.26967993, a: 1}
       data:
         first:
           name: _BaseColor2
-        second: {r: 0, g: 1, b: 0.54482746, a: 0.484}
+        second: {r: 0.1854455, g: 0.7205882, b: 0.47700593, a: 0.484}
       data:
         first:
           name: _CapColor
-        second: {r: 0.20588237, g: 0.8028398, b: 1, a: 0.797}
+        second: {r: 1, g: 0, b: 0.35172415, a: 0.797}
       data:
         first:
           name: _BottomColor
