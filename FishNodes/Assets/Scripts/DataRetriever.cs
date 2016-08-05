@@ -20,13 +20,17 @@ public class DataRetriever : MonoBehaviour
 	int redClusterPort = 8651;
 
 	public bool fishLimiter = true;
+	public bool fishUpdater = true;
 	public float fishScaleAmount = 1;
 
 	void Start ()
 	{
 		fishSpawner = GetComponent<FishSpawner> ();
-		//InvokeRepeating ("GetXML", 1, 600);
-		GetXML ();
+		if (fishUpdater) {
+			InvokeRepeating ("GetXML", 1, 600);
+		} else {
+			GetXML ();
+		}
 	}
 
 	void Update(){
@@ -65,7 +69,7 @@ public class DataRetriever : MonoBehaviour
 	}
 
 	IEnumerator ParseXML (string xmlInput, string url, int port){
-
+		
 		GameObject loadingFish;
 		try {
 			loadingFish = GameObject.Find ("[CameraRig]").transform.FindChild ("GUIcanvas").FindChild ("LoadingFish").gameObject;
@@ -90,16 +94,34 @@ public class DataRetriever : MonoBehaviour
 				yield return null;
 			}
 		} else {
-			string xml = tcpConnect (url, port);
-			File.WriteAllText (xmlInput, xml);
+			try{
+				string xml = tcpConnect (url, port);
+				try{
+					File.WriteAllText (xmlInput, xml);
+				}catch(IOException ioe){
+					//File.AppendAllText("errorLog.txt", "\n" + ioe.ToString() + "\n");
+					UnityEngine.Debug.Log(ioe.ToString());
+				}
+			}catch(SocketException se){
+				//UnityEngine.Debug.LogException (se);
+				//File.AppendAllText("errorLog.txt", "\n" + se.ToString() + "\n");
+				UnityEngine.Debug.Log(se.ToString());
+			}
 		}
 
 		GameObject[] listOfFish = GameObject.FindGameObjectsWithTag ("fish");
 
 		int fishCount = 0;
 
-		XmlTextReader reader = new XmlTextReader (xmlInput);
-		if (reader.ReadToFollowing ("CLUSTER")) {
+		XmlTextReader reader = null;
+		try{
+			reader = new XmlTextReader (xmlInput);
+		}catch(FileNotFoundException fnfe){
+			//UnityEngine.Debug.LogException (e);
+			//File.AppendAllText("errorLog.txt", "\n" + fnfe.ToString() + "\n");
+			UnityEngine.Debug.Log(fnfe.ToString());
+		}
+		if (reader != null && reader.ReadToFollowing ("CLUSTER")) {
 			string clusterName = reader.GetAttribute ("NAME");
 
 			foreach (GameObject fish in listOfFish) {
@@ -172,7 +194,9 @@ public class DataRetriever : MonoBehaviour
 			}
 
 		}
-		reader.Close ();
+		if(reader != null){
+			reader.Close ();
+		}
 		loadingFish.SetActive (false);
 		if(loadingFish.name.Equals("loadingFish")){
 			DestroyImmediate (loadingFish);

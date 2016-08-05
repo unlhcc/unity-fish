@@ -1,4 +1,7 @@
-﻿Shader "Sinuous Shrooms/Standard Shroom"
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
+Shader "Sinuous Shrooms/Standard Shroom"
 {
 	Properties
 	{
@@ -61,7 +64,7 @@
 
 		void surf (Input IN, inout SurfaceOutputStandard o)
 		{
-			float3 objwPos = mul(_Object2World, float4(0.0,0.0,0.0, 1.0)).xyz;
+			float3 objwPos = mul(unity_ObjectToWorld, float4(0.0,0.0,0.0, 1.0)).xyz;
 			float camDist = distance(objwPos, _WorldSpaceCameraPos);
 
 			if (camDist > 50.0)
@@ -74,9 +77,9 @@
 			}
 			else
 			{
-				float3 objPos = mul(_World2Object, float4(IN.worldPos, 1.0)).xyz;
+				float3 objPos = mul(unity_WorldToObject, float4(IN.worldPos, 1.0)).xyz;
 				float3 wpos = IN.worldPos;
-				float3 normal = mul(_World2Object, float4(IN.worldNormal, 0.0)).xyz;
+				float3 normal = mul(unity_WorldToObject, float4(IN.worldNormal, 0.0)).xyz;
 
 				fixed down = smoothstep(0.4, 1.0, dot(normal, float3(0.0, -1.0, 0.0)));
 				fixed up = smoothstep(0.0, 1.0, dot(normal, float3(0.0, 1.0, 0.0)));
