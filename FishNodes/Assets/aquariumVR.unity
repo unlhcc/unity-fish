@@ -30224,7 +30224,8 @@ MonoBehaviour:
   noSteamVRFallbackCamera: {fileID: 0}
   noSteamVRFallbackMaxDistanceNoItem: 10
   noSteamVRFallbackMaxDistanceWithItem: 0.5
-  controllerPrefab: {fileID: 168468, guid: 3f39fc63a93686e4a8e9168ee73f24d9, type: 2}
+  controllerPrefab: {fileID: 1843026318125030, guid: 2b291af1fed365b48b0c9dcb65687a5a,
+    type: 2}
   showDebugText: 0
   spewDebugText: 0
 --- !u!1 &880689138
@@ -36094,7 +36095,8 @@ MonoBehaviour:
   noSteamVRFallbackCamera: {fileID: 0}
   noSteamVRFallbackMaxDistanceNoItem: 10
   noSteamVRFallbackMaxDistanceWithItem: 0.5
-  controllerPrefab: {fileID: 168468, guid: 3f39fc63a93686e4a8e9168ee73f24d9, type: 2}
+  controllerPrefab: {fileID: 1832927529186306, guid: dfb45eb285ea37d4ea54248c248b22a7,
+    type: 2}
   showDebugText: 0
   spewDebugText: 0
 --- !u!1 &1079533864
