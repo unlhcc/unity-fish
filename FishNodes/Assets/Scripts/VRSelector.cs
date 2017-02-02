@@ -36,7 +36,8 @@ public class VRSelector : MonoBehaviour {
 	public void HideCanvas (){
 
 		if(Fish != null){
-			Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+			//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+			Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
 		}
 
 		Color clear = Color.clear;
@@ -60,12 +61,14 @@ public class VRSelector : MonoBehaviour {
 	public void SetCanvas(GameObject fish){
 
 		if(Fish != null){
-			Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+			//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
+			Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
 		}
 
 		Fish = fish;
 
-		Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+		//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+		Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = true;
 
 		//gameObject.SetActive (true);
 		

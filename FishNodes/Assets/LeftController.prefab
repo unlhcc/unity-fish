@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114834083478041368}
   - component: {fileID: 114645476591640356}
   - component: {fileID: 114574361192060758}
+  - component: {fileID: 114093322438208042}
   m_Layer: 0
   m_Name: LeftController
   m_TagString: Untagged
@@ -52,6 +53,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b93b6a877adcbf94c89a9d6e0c0e844d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114093322438208042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832927529186306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55a4c085d0cd4843993dc1bddd090ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114574361192060758
