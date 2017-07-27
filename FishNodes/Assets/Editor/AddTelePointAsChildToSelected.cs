@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+//in the unity editor, this lets you turn mass selected objects into warp points
 public class AddWarpPoints : EditorWindow
 {
 	GameObject prefab;
