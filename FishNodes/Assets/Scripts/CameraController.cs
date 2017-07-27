@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour {
 	Transform camPod2;
 
 	void Start () {
-		camPod1 = transform.FindChild ("Camera Pod 1");
-		camPod2 = transform.FindChild ("Camera Pod 2");
+		camPod1 = transform.Find ("Camera Pod 1");
+		camPod2 = transform.Find ("Camera Pod 2");
 	}
 
 	void SwitchCamera(int camPodID){

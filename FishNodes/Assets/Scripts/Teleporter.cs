@@ -54,10 +54,10 @@ public class Teleporter : MonoBehaviour {
 						Physics.Raycast (transform.position, transform.TransformDirection (Vector3.forward), out hit);
 					} else if (hit.collider.gameObject.tag == "fish") {
 						//transform.parent.FindChild ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
-						transform.FindChild ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
+						transform.Find ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
 					} else {
 						//transform.parent.FindChild ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
-						transform.FindChild ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
+						transform.Find ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
 					}
 				}
 				lineRenderer.SetPosition (0,transform.position);

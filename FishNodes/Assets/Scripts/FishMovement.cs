@@ -29,8 +29,8 @@ public class FishMovement : MonoBehaviour {
 
 	void Awake(){
 		tank = GameObject.Find ("tank");
-		tankCenter = tank.transform.FindChild ("center").transform.position;
-		tankSphereDistance = Vector3.Distance (tankCenter, tank.transform.FindChild ("corner").transform.position) * cornerScale;
+		tankCenter = tank.transform.Find ("center").transform.position;
+		tankSphereDistance = Vector3.Distance (tankCenter, tank.transform.Find ("corner").transform.position) * cornerScale;
 		swimSpeed = tank.transform.localScale.x * swimSpeed;
 		turnSpeed = tank.transform.localScale.x * turnSpeed;
 		ZONE_ONE_DIST = tank.transform.localScale.x * ZONE_ONE_DIST;

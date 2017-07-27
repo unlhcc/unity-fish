@@ -20,24 +20,24 @@ public class VRSelector : MonoBehaviour {
 
 
 	void Start(){
-		FishName = transform.FindChild ("FishName").gameObject;
+		FishName = transform.Find ("FishName").gameObject;
 
-		LeaderData = FishName.transform.FindChild ("LeaderData").gameObject;
-		WorkingNodes = LeaderData.transform.FindChild ("WorkingNodes").GetComponent<Text>();
-		DeadNodes = LeaderData.transform.FindChild ("DeadNodes").GetComponent<Text>();
-		TotalNodes = LeaderData.transform.FindChild ("TotalNodes").GetComponent<Text>();
+		LeaderData = FishName.transform.Find ("LeaderData").gameObject;
+		WorkingNodes = LeaderData.transform.Find ("WorkingNodes").GetComponent<Text>();
+		DeadNodes = LeaderData.transform.Find ("DeadNodes").GetComponent<Text>();
+		TotalNodes = LeaderData.transform.Find ("TotalNodes").GetComponent<Text>();
 
-		FollowerData = FishName.transform.FindChild ("FollowerData").gameObject;
-		MemoryUtilization = FollowerData.transform.FindChild ("MemoryUtilization").GetComponent<Text>();
-		NumberCPU = FollowerData.transform.FindChild ("NumberCPU").GetComponent<Text>();
-		LoadAverage = FollowerData.transform.FindChild ("LoadAverage").GetComponent<Text>();
+		FollowerData = FishName.transform.Find ("FollowerData").gameObject;
+		MemoryUtilization = FollowerData.transform.Find ("MemoryUtilization").GetComponent<Text>();
+		NumberCPU = FollowerData.transform.Find ("NumberCPU").GetComponent<Text>();
+		LoadAverage = FollowerData.transform.Find ("LoadAverage").GetComponent<Text>();
 	}
 
 	public void HideCanvas (){
 
 		if(Fish != null){
 			//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
-			Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
+			Fish.transform.Find ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
 		}
 
 		Color clear = Color.clear;
@@ -62,13 +62,13 @@ public class VRSelector : MonoBehaviour {
 
 		if(Fish != null){
 			//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Diffuse");
-			Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
+			Fish.transform.Find ("outline").GetComponent<SkinnedMeshRenderer>().enabled = false;
 		}
 
 		Fish = fish;
 
 		//Fish.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
-		Fish.transform.FindChild ("outline").GetComponent<SkinnedMeshRenderer>().enabled = true;
+		Fish.transform.Find ("outline").GetComponent<SkinnedMeshRenderer>().enabled = true;
 
 		//gameObject.SetActive (true);
 		

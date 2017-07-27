@@ -32,15 +32,15 @@ public class FishData : MonoBehaviour {
 
 	void Awake(){
 		tank = GameObject.Find ("tank");
-		tankWalls = tank.transform.FindChild ("tank walls").gameObject;
-		tankWallBack = tankWalls.transform.FindChild("Plane").transform.position.z;
-		tankWallLeft = tankWalls.transform.FindChild("Plane (1)").transform.position.x;
-		tankWallRight = tankWalls.transform.FindChild("Plane (2)").transform.position.x;
-		tankWallFront = tankWalls.transform.FindChild("Plane (3)").transform.position.z;
-		tankWallFloor = tankWalls.transform.FindChild("tank floor").transform.position.y;
-		tankWallTop = tankWalls.transform.FindChild("tank top").transform.position.y;
-		origin = tank.transform.FindChild ("center").transform.position;
-		corner = tank.transform.FindChild ("corner").transform.position;
+		tankWalls = tank.transform.Find ("tank walls").gameObject;
+		tankWallBack = tankWalls.transform.Find("Plane").transform.position.z;
+		tankWallLeft = tankWalls.transform.Find("Plane (1)").transform.position.x;
+		tankWallRight = tankWalls.transform.Find("Plane (2)").transform.position.x;
+		tankWallFront = tankWalls.transform.Find("Plane (3)").transform.position.z;
+		tankWallFloor = tankWalls.transform.Find("tank floor").transform.position.y;
+		tankWallTop = tankWalls.transform.Find("tank top").transform.position.y;
+		origin = tank.transform.Find ("center").transform.position;
+		corner = tank.transform.Find ("corner").transform.position;
 		cornerDistance = Vector3.Distance (origin,corner);
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody> ();

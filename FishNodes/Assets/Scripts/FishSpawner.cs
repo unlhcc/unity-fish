@@ -50,7 +50,7 @@ public class FishSpawner : MonoBehaviour {
 	 */
 	public GameObject SpawnFish(string leader, bool isLeader){
 
-		GameObject fish = Instantiate (fishPrefab, transform.FindChild("center").transform.position, Quaternion.identity) as GameObject;
+		GameObject fish = Instantiate (fishPrefab, transform.Find("center").transform.position, Quaternion.identity) as GameObject;
 
 		FishData fd = fish.GetComponent<FishData> ();
 		FishMovement fm = fish.GetComponent<FishMovement>();

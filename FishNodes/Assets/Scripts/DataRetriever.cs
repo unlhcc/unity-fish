@@ -72,7 +72,7 @@ public class DataRetriever : MonoBehaviour
 		
 		GameObject loadingFish;
 		try {
-			loadingFish = GameObject.Find ("[CameraRig]").transform.FindChild ("GUIcanvas").FindChild ("LoadingFish").gameObject;
+			loadingFish = GameObject.Find ("[CameraRig]").transform.Find ("GUIcanvas").Find ("LoadingFish").gameObject;
 		} catch {
 			loadingFish = new GameObject ();
 			loadingFish.name = "loadingFish";

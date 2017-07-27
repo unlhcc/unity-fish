@@ -24,9 +24,9 @@ namespace Valve.VR.InteractionSystem
 					lineRenderer.SetPosition (1, hit.point);
 					if (hand.controller.GetPressDown( Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad )){
 						if (hit.collider.gameObject.tag == "fish") {
-							transform.FindChild ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
+							transform.Find ("GUIcanvas").GetComponent<VRSelector> ().SetCanvas (hit.collider.gameObject);
 						} else {
-							transform.FindChild ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
+							transform.Find ("GUIcanvas").GetComponent<VRSelector> ().HideCanvas ();
 						}
 					}
 				}
