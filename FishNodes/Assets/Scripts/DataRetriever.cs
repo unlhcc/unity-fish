@@ -16,8 +16,8 @@ public class DataRetriever : MonoBehaviour
 	FishSpawner fishSpawner;
 	string sandhillsURL = "129.93.244.197";
 	int sandhillsPort = 8654;
-	string redClusterURL = "129.93.239.169";
-	int redClusterPort = 8651;
+	string redClusterURL = "129.93.244.198";
+	int redClusterPort = 8654;
 
 	public bool fishLimiter = true;
 	public bool fishUpdater = true;
