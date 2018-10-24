@@ -14,8 +14,8 @@ public class DataRetriever : MonoBehaviour
 {
 
 	FishSpawner fishSpawner;
-	string sandhillsURL = "129.93.244.197";
-	int sandhillsPort = 8654;
+	string sandhillsURL = "129.93.227.114";
+	int sandhillsPort = 8655;
 	string redClusterURL = "129.93.244.198";
 	int redClusterPort = 8654;
 

@@ -107,7 +107,7 @@ public class FishData : MonoBehaviour {
 			} else {
 				flash = false;
 			}
-			scalePercentage = scalePercentage * baseScale;
+			scalePercentage = scalePercentage/1.5f * baseScale;
 			transform.localScale = new Vector3(scalePercentage,scalePercentage,scalePercentage);
 		}
 	}
