@@ -14,9 +14,11 @@ public class DataRetriever : MonoBehaviour
 {
 
 	FishSpawner fishSpawner;
-	string sandhillsURL = "129.93.227.114";
-	int sandhillsPort = 8655;
-	string redClusterURL = "129.93.244.198";
+	string craneURL = "129.93.227.114";
+	int cranePort = 8655;
+    string tuskerURL = "129.93.227.121";
+    int tuskerPort = 8655;
+    string redClusterURL = "129.93.244.198";
 	int redClusterPort = 8654;
 
 	public bool fishLimiter = true;
@@ -60,8 +62,9 @@ public class DataRetriever : MonoBehaviour
 
 	public void GetXML ()
 	{
-		StartCoroutine (ParseXML ("sandhillsXML.xml", sandhillsURL, sandhillsPort));
-		StartCoroutine (ParseXML ("redClusterXML.xml", redClusterURL, redClusterPort));
+		StartCoroutine (ParseXML ("craneXML.xml", craneURL, cranePort));
+        StartCoroutine(ParseXML("tuskerXML.xml", tuskerURL, tuskerPort));
+        StartCoroutine (ParseXML ("redClusterXML.xml", redClusterURL, redClusterPort));
 		/*
 		File.Delete ("sandhillsXML.xml");
 		File.Delete ("redClusterXML.xml");
