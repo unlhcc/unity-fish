@@ -83,7 +83,7 @@ public class FishSpawner : MonoBehaviour {
 				fd.fishColor = Color.red;
 			}
 		}
-        else if (leader.Equals("tusker"))
+        else if (leader.Equals("rhino"))
         {
             if (isLeader){
                 fd.fishColor = new Color(0.3f, 0.3f, 0f);
