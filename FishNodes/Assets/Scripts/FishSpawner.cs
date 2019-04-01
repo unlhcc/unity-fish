@@ -70,11 +70,11 @@ public class FishSpawner : MonoBehaviour {
 		} else {
 			fm.leaderFish = GameObject.Find(leader);
 		}
-		if (leader.Equals ("sandhills")) {
+		if (leader.Equals ("crane")) {
 			if(isLeader){
-				fd.fishColor = new Color(0f,0.3f,0f);
+				fd.fishColor = new Color(0f,0f,0.3f);
 			}else{
-				fd.fishColor = Color.green;
+				fd.fishColor = Color.blue;
 			}
 		} else if (leader.Equals ("red-workers")) {
 			if(isLeader){
@@ -82,7 +82,15 @@ public class FishSpawner : MonoBehaviour {
 			}else{
 				fd.fishColor = Color.red;
 			}
-		} else {
+		}
+        else if (leader.Equals("rhino"))
+        {
+            if (isLeader){
+                fd.fishColor = new Color(0.3f, 0.3f, 0f);
+            }else{
+                fd.fishColor = Color.yellow;
+            }
+        } else {
 			fd.fishColor = Color.cyan;
 		}
 		fd.SetColor (fd.fishColor);

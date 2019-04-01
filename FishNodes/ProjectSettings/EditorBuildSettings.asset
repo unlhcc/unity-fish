@@ -7,7 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/FishNodes.unity
+    guid: cb4e47fe2217ba2449501addd8d03135
   - enabled: 0
     path: Assets/FishNodesVR.unity
+    guid: a0e28624f801f7d40960fd01b0763f32
   - enabled: 1
     path: Assets/aquariumVR.unity
+    guid: 6dc767514c70a8e4080486793a7e8586
+  m_configObjects: {}
