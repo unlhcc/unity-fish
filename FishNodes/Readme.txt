@@ -28,3 +28,5 @@ controls:
 'F11' enter fullscreen
 
 'e' toggle 100 fish limiter
+
+Make sure to move Downloader.exe into the build for deployment. Without it, Unity will take time to download the files on the main thread.
