@@ -49,8 +49,9 @@ public class FishSpawner : MonoBehaviour {
 	 * isLeader defines if it is main fish that represents the cluster.
 	 */
 	public GameObject SpawnFish(string leader, bool isLeader){
-
-		GameObject fish = Instantiate (fishPrefab, transform.Find("center").transform.position, Quaternion.identity) as GameObject;
+        Vector3 RandomDrop = new Vector3(Random.Range(-40.0f, 40.0f), Random.Range(42.0f, 45.0f), Random.Range(-15.0f, 15.0f));
+        Quaternion RandomRotation = Quaternion.Euler(Random.Range(0f, 360.0f), Random.Range(0f, 360.0f), Random.Range(0f, 360.0f));
+		GameObject fish = Instantiate (fishPrefab, RandomDrop, RandomRotation) as GameObject;
 
 		FishData fd = fish.GetComponent<FishData> ();
 		FishMovement fm = fish.GetComponent<FishMovement>();
