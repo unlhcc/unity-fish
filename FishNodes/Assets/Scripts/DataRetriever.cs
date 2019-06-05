@@ -17,7 +17,7 @@ public class DataRetriever : MonoBehaviour
 	string craneURL = "129.93.227.114";
 	int cranePort = 8655;
     string rhinoURL = "129.93.241.17";
-    int rhinoPort = 8657;
+    int rhinoPort = 8649;
     string redClusterURL = "129.93.244.198";
 	int redClusterPort = 8654;
 
