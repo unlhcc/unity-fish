@@ -32,3 +32,9 @@
   ```
   
   * The `(leader.Equals)` name will be the cluster name within ganglia.
+5. Now we will start using the Unity system.
+  * Open Unity Hub
+  * Select "Projects" side menu and select "Add"
+  * In the dialog box navigate to the /FishNode directory and select it.
+  * If your project has a warning about about "No matching editor" go to https://unity3d.com/get-unity/download/archive and find the appropriate version of Unity to download. Click on the green "Unity Hub" download link.
+  *
