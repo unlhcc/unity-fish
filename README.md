@@ -37,4 +37,12 @@
   * Select "Projects" side menu and select "Add"
   * In the dialog box navigate to the /FishNode directory and select it.
   * If your project has a warning about about "No matching editor" go to https://unity3d.com/get-unity/download/archive and find the appropriate version of Unity to download. Click on the green "Unity Hub" download link.
-  *
+  * Once downloaded, launch the correct version of Unity from Unity Hub.
+6. Fish Node configuration in Unity
+  * Open the FishNode project, this will take a few minutes depending on your system.
+  * Select "FishNodes" from the lower work area in the Unity interface.
+  * Select the "open" button from the right work pane where "FishNodes" populated.
+  * Change the text to the correct color and names to match the changes you made in C# files.
+  	```
+	Camera Pod > Camera Pod 1 > UIText > Running Text
+	```
