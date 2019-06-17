@@ -19,7 +19,8 @@
   ```
   * Now in the GetXML() Function,  update it like this
   
-  ``` StartCoroutine (ParseXML ("<myCluster>.xml", <AddrString>, <PortInt>));
+  ```
+  StartCoroutine (ParseXML ("<myCluster>.xml", <AddrString>, <PortInt>));
   ```
 4. Next modify /unity-fish/FishNodes/Assets/FishSpawner.cs
   * Change the if statements to the colors of your fish.
@@ -30,4 +31,4 @@
 				fd.fishColor = Color.FromRgb(255, 255, 255);
   ```
   
-  * The (leader.Equals) name will be the cluster name within ganglia.
+  * The `(leader.Equals)` name will be the cluster name within ganglia.
