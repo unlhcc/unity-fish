@@ -1,4 +1,4 @@
-# Unibersity of Nebraska at Lincoln Holland Computing Center's Unity-Fish Animation System
+# University of Nebraska at Lincoln Holland Computing Center's Unity-Fish Animation System
 
 ### Prerequisite
 * You will need a server that is utilizing the Ganglia system monitoring tool
@@ -19,7 +19,7 @@
   ```
   * Now in the GetXML() Function,  update it like this
   
-  ```StartCoroutine (ParseXML ("<myCluster>.xml", <AddrString>, <PortInt>));
+  ``` StartCoroutine (ParseXML ("<myCluster>.xml", <AddrString>, <PortInt>));
   ```
 4. Next modify /unity-fish/FishNodes/Assets/FishSpawner.cs
   * Change the if statements to the colors of your fish.
