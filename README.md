@@ -1,11 +1,11 @@
-# University of Nebraska at Lincoln Holland Computing Center's Unity-Fish Animation System
+# The University of Nebraska at Lincoln Holland Computing Center's Unity-Fish Animation System
 
 ### Prerequisite
 * You will need a server that is utilizing the Ganglia system monitoring tool
   * For additional information on Ganglia: http://ganglia.so
 * Your server running ganglia will need to have the Unity-Fish Machine's IP as a trusted host to access the XML data.
   * You will need to uncomment the "trusted_hosts" line in /etc/ganglia/gmetad.conf
-  * Add the Unity-Fish Machine's IP to this line (space seperated list).
+  * Add the Unity-Fish Machine's IP to this line (space separated list).
   * Restart the gmetad.service.
 * Your server running ganglia will also need to have XML request port (gmetad.conf lists this as 8651 by default) open through Firewalld.
 * The machine hosting Unity Fish will need:
@@ -39,12 +39,12 @@
   * The `(leader.Equals)` name will be the cluster name within ganglia.
 5. Now we will start using the Unity system.
   * Open Unity Hub
-  * Select "Projects" side menu and select "Add"
-  * In the dialog box navigate to the /FishNode directory and select it.
-  * If your project has a warning about about "No matching editor" go to https://unity3d.com/get-unity/download/archive and find the appropriate version of Unity to download. Click on the green "Unity Hub" download link.
+  * Select "Projects" side menu and select "Add".
+  * In the dialog box, navigate to the /FishNode directory and select it.
+  * If your project has a warning about "No matching editor" go to https://unity3d.com/get-unity/download/archive and find the appropriate version of Unity to download. Click on the green "Unity Hub" download link.
   * Once downloaded, launch the correct version of Unity from Unity Hub.
 6. Fish Node configuration in Unity
-  * Open the FishNode project, this will take a few minutes depending on your system.
+  * Open the FishNode project; this will take a few minutes depending on your system.
   * Select "FishNodes" from the lower work area in the Unity interface.
   * Select the "open" button from the right work pane where "FishNodes" populated.
   * Change the text to the correct color and names to match the changes you made in C# files.
@@ -53,9 +53,9 @@
 	```
 ## Building the Project
 
-1. Once the unnity-fish look and act they way you want save the project.
+1. Once the unity-fish look and act the way you want them to save the project.
 2. Use `Ctrl + Shift + B` to open the Project Build Dialog Box.
-3. Select the sections of the project in the upper left that you want to build, we skipped the VR projects.
+3. Select the sections of the project in the upper left that you want to build; we skipped the VR projects.
 3. Choose your target system, in our case we did Windows 64 bit.
 4. For ease of use later, select the "FishNodes" folder as the build destination.
 5. Select "build", this should only take a few minutes.
@@ -64,18 +64,18 @@
 ## Controls for in "Game" (Source File)
 
 * Controls for Fish Spawning (FishSpawner.cs)
-  * `Shift + U` will spwan a new Leader Fish for Cluster 1.
+  * `Shift + U` will spawn a new Leader Fish for Cluster 1.
   * `Shift + I` will spawn 50 new Cluster 1 Follower Fish.
   * `Shift + P` will spawn 50 new Cluster 2 Follower Fish.
   * `Shift + L` will kill all the Leader Fish in the tank.
-  * `Shift + K` will kill ALL the fish in the tank.
+  * `Shift + K` will kill ALL the Fish in the tank.
 * Controls for Fish Movement (FishApperanceChanger.cs)
-  * `Numpad Plus Key` will make the fish larger.
-  * `Numpad Minus Key` will make the fish smaller.
-  * `-` will decrease the swimming speed of the fish.
-  * `=` will increase the swimming speed of the fish.
+  * `Numpad Plus Key` will make the Fish larger.
+  * `Numpad Minus Key` will make the Fish smaller.
+  * `-` will decrease the swimming speed of the Fish.
+  * `=` will increase the swimming speed of the Fish.
 * Controls for Cluster Information (DataRetriever.cs)
-  * `Shift + R` will get new information from Ganglia and "respawn" the fish.
+  * `Shift + R` will get new information from Ganglia and "respawn" the Fish.
   * `Shift + E` will enable a "Fish Limiter" to limit the number of Fish on screen.
 * Controls for the Camera (CameraController.cs)
   * `1` will show default camera view.
