@@ -8,7 +8,6 @@ using System.Collections;
 public class FishSpawner : MonoBehaviour {
 
 	public Object fishPrefab;
-
 	void Update(){
 		//press keycodes to spawn fish
 		if(Input.GetKeyDown(KeyCode.U)){//sand leader
@@ -41,7 +40,27 @@ public class FishSpawner : MonoBehaviour {
 				Destroy(fish);
 			}
 		}
-	}
+		if(Input.GetKeyDown(KeyCode.D)){//hide all leader fish
+			GameObject[] allFish = GameObject.FindGameObjectsWithTag("fish");
+			foreach(GameObject fish in allFish){
+				if(fish.GetComponent<FishData>().isSchoolLeader){
+						fish.gameObject.transform.localScale = new Vector3(0,0,0);
+						
+					}
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.F)){//show all leader fish
+				GameObject[] allFish = GameObject.FindGameObjectsWithTag("fish");
+				foreach(GameObject fish in allFish){
+					if(fish.GetComponent<FishData>().isSchoolLeader){
+							fish.gameObject.transform.localScale = new Vector3(20,20,20);
+							
+					}
+				}
+			}
+		}
+	
+	
 
 	/*
 	 * creates a new fish and returns it.
@@ -50,7 +69,7 @@ public class FishSpawner : MonoBehaviour {
 	 */
 	public GameObject SpawnFish(string leader, bool isLeader){
         Vector3 RandomDrop = new Vector3(Random.Range(-40.0f, 40.0f), Random.Range(42.0f, 45.0f), Random.Range(-15.0f, 15.0f));
-        Quaternion RandomRotation = Quaternion.Euler(Random.Range(0f, 360.0f), Random.Range(0f, 360.0f), Random.Range(0f, 360.0f));
+        Quaternion RandomRotation = Quaternion.Euler(Random.Range(45f, 135.0f), Random.Range(0f, 360.0f), Random.Range(0f, 360.0f));
 		GameObject fish = Instantiate (fishPrefab, RandomDrop, RandomRotation) as GameObject;
 
 		FishData fd = fish.GetComponent<FishData> ();

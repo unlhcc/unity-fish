@@ -17,6 +17,9 @@ controls:
 
 'k' delete all fish
 
+'d' hide leader fish
+'f' show leader fish
+
 'u' create test green leader fish
 'i' create 50 test green follower fish
 'o' create test red leader fish
