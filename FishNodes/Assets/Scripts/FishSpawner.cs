@@ -45,7 +45,7 @@ public class FishSpawner : MonoBehaviour {
 			foreach(GameObject fish in allFish){
 				if(fish.GetComponent<FishData>().isSchoolLeader){
 						fish.gameObject.transform.localScale = new Vector3(0,0,0);
-						isVisible = false;
+						
 					}
 				}
 			}
@@ -54,7 +54,7 @@ public class FishSpawner : MonoBehaviour {
 				foreach(GameObject fish in allFish){
 					if(fish.GetComponent<FishData>().isSchoolLeader){
 							fish.gameObject.transform.localScale = new Vector3(20,20,20);
-							isVisible = false;
+							
 					}
 				}
 			}
