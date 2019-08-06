@@ -9,6 +9,8 @@ using System.Xml;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System;
+using System.Collections.Generic;
 
 public class DataRetriever : MonoBehaviour
 {
@@ -69,6 +71,49 @@ public class DataRetriever : MonoBehaviour
 		File.Delete ("sandhillsXML.xml");
 		File.Delete ("redClusterXML.xml");
 		*/
+		UpdateStatus();
+	}
+
+	public string getStatusData(string Cluster){
+		string StatusURL = "https://status.hcc.unl.edu";
+		string result;
+		string tempHold = "";
+		Dictionary<string,string> vault = new Dictionary<string,string>();
+		using (WebClient client = new WebClient())
+		{
+			result = client.DownloadString(StatusURL);
+			
+		}
+		string[] lines = result.Split('\n');
+		int tempIndex = 0;
+		foreach (string s in lines){
+			UnityEngine.Debug.Log(tempIndex);
+			if (tempIndex > 1){
+			if (s.Contains("serviceList__status") ||  lines[tempIndex - 1].Contains("serviceList__name"))
+			{
+				if (s.Contains("status")){
+					tempHold = s.Split('<')[2].Split('>')[1];
+				}else{
+					vault.Add(s.Replace("          ",""),tempHold);
+				}
+			} 
+		}tempIndex += 1;}
+		
+		return vault[Cluster];
+
+	}
+
+	public void UpdateStatus()
+	{
+		string tempVal;
+		GameObject CraneStat = GameObject.Find("CraneStatus");
+		CraneStat.GetComponent<TextMesh>().text = getStatusData("Crane");
+		GameObject RedStat = GameObject.Find("RedStatus");
+		RedStat.GetComponent<TextMesh>().text = getStatusData("Red");
+		GameObject RhinoStat = GameObject.Find("RhinoStatus");
+		RhinoStat.GetComponent<TextMesh>().text = getStatusData("Rhino");
+		//tempVal.text = "CAKE";
+		
 	}
 
 	IEnumerator ParseXML (string xmlInput, string url, int port){
