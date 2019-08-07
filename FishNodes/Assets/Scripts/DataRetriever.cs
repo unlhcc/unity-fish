@@ -27,6 +27,13 @@ public class DataRetriever : MonoBehaviour
 	public bool fishUpdater = true;
 	public float fishScaleAmount = 1;
 
+	Dictionary<string,Color> statusColors = new Dictionary<string,Color>(){
+		{"Major Outage",new Color(1f,0f,0f)},
+		{"Partial Outage",new Color(1f,.8f,0f)},
+		{"Operational",new Color(0f,1f,0f)},
+		{"Maintenance",new Color(1f,0.5f,0f)}
+	};
+
 	void Start ()
 	{
 		fishSpawner = GetComponent<FishSpawner> ();
@@ -82,7 +89,6 @@ public class DataRetriever : MonoBehaviour
 		using (WebClient client = new WebClient())
 		{
 			result = client.DownloadString(StatusURL);
-			
 		}
 		string[] lines = result.Split('\n');
 		int tempIndex = 0;
@@ -98,9 +104,7 @@ public class DataRetriever : MonoBehaviour
 				}
 			} 
 		}tempIndex += 1;}
-		
 		return vault[Cluster];
-
 	}
 
 	public void UpdateStatus()
@@ -108,10 +112,13 @@ public class DataRetriever : MonoBehaviour
 		string tempVal;
 		GameObject CraneStat = GameObject.Find("CraneStatus");
 		CraneStat.GetComponent<TextMesh>().text = getStatusData("Crane");
+		CraneStat.GetComponent<TextMesh>().color = statusColors[getStatusData("Crane")];
 		GameObject RedStat = GameObject.Find("RedStatus");
 		RedStat.GetComponent<TextMesh>().text = getStatusData("Red");
+		RedStat.GetComponent<TextMesh>().color = statusColors[getStatusData("Red")];
 		GameObject RhinoStat = GameObject.Find("RhinoStatus");
 		RhinoStat.GetComponent<TextMesh>().text = getStatusData("Rhino");
+		RhinoStat.GetComponent<TextMesh>().color = statusColors[getStatusData("Rhino")];
 		//tempVal.text = "CAKE";
 		
 	}
