@@ -74,6 +74,9 @@
   * `Numpad Minus Key` will make the Fish smaller.
   * `-` will decrease the swimming speed of the Fish.
   * `=` will increase the swimming speed of the Fish.
+* Controls for Leader Fish Visibility (FishSpawner.cs)
+  * `D` will make the leader fish 'dissappear'.
+  * `F` will make the leader fish 'reappear'.
 * Controls for Cluster Information (DataRetriever.cs)
   * `Shift + R` will get new information from Ganglia and "respawn" the Fish.
   * `Shift + E` will enable a "Fish Limiter" to limit the number of Fish on screen.
@@ -85,4 +88,3 @@
 * Controls for Game Menu (MenuUtilityKeys.cs)
   * `Esc` will exit the program.
   * `F11` will put the game into fullscreen mode.
-
