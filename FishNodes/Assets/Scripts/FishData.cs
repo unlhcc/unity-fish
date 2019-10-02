@@ -51,7 +51,7 @@ public class FishData : MonoBehaviour {
 	void Update (){
 		if(flash && !isDead){
 			float t = Mathf.PingPong(Time.time,1f);
-			mat.color = Color.Lerp(fishColor,new Color(fishColor.r,fishColor.g,1),t);
+			mat.color = Color.Lerp(fishColor,new Color(1,fishColor.g,1),t);
 		}
 		//float distance = Vector3.Distance (transform.position, origin);
 		if((tankWalls.activeSelf && (transform.position.x > tankWallRight || transform.position.x < tankWallLeft ||
